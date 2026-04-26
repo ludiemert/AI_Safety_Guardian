@@ -1,0 +1,64 @@
+/* This styles the whole page */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+
+    /* NEW SOFT BLUE */
+    background: linear-gradient(to right, #74b9ff, #a29bfe);
+}
+/* Container box */
+.container {
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+
+    width: 90%;
+    max-width: 400px;
+
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+
+    /* ADD THIS */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Title */
+h1 {
+    font-size: 28px;
+    color: #1e3c72;
+}
+
+/* Status text */
+p {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+/* Button */
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #ff4b2b;
+    color: white;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #ff1c00;
+}
