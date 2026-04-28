@@ -1,14 +1,8 @@
-# This imports Flask (web framework)
-from flask import Flask, render_template, request
-
-# This imports OpenCV for image processing
+from flask import Flask, render_template, request, send_from_directory
 import cv2
-
-# This imports NumPy to work with image data
 import numpy as np
 
-
-# This creates the app
+# Create app
 app = Flask(
     __name__,
     template_folder="../frontend/templates",
@@ -16,41 +10,44 @@ app = Flask(
 )
 
 
-# This is the home page route
+# Home page
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
-# This route receives the uploaded image
+# Upload route
 @app.route("/upload", methods=["POST"])
 def upload():
-    # Get the image file from the form
     file = request.files["image"]
 
-    # If no file is selected, show a message
-    if not file:
+    if not file or file.filename == "":
         return "No file selected"
 
-    # Read the image file as bytes
-    file_bytes = np.frombuffer(file.read(), np.uint8)
+    original_path = "data/uploads/original.jpg"
+    result_path = "data/results/result.jpg"
 
-    # Convert bytes to an OpenCV image
-    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+    file.save(original_path)
 
-    # Convert the image to gray color
+    img = cv2.imread(original_path)
+
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    # Detect edges in the image
     edges = cv2.Canny(gray, 100, 200)
 
-    # Save the processed image
-    cv2.imwrite("data/result.jpg", edges)
+    cv2.imwrite(result_path, edges)
 
-    # Show success message
-    return "Image processed! Check data/result.jpg"
+    return render_template(
+        "result.html",
+        original_image="/data/uploads/original.jpg",
+        result_image="/data/results/result.jpg",
+    )
 
 
-# This runs the server
+@app.route("/data/<path:filename>")
+def data_files(filename):
+    return send_from_directory("../data", filename)
+
+
+# Run server
 if __name__ == "__main__":
     app.run(debug=True)

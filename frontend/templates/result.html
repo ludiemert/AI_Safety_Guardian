@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- This defines the HTML document -->
+
+<html lang="en">
+<!-- This starts the HTML page -->
+
+<head>
+  <!-- Page settings -->
+
+  <meta charset="UTF-8">
+  <!-- This sets text format -->
+
+  <title>Result - AI Safety Guardian</title>
+  <!-- This is the page title -->
+
+  <!-- Load CSS file -->
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- Load favicon icon -->
+  <link rel="icon" href="/static/favicon.ico">
+</head>
+
+<body>
+<!-- This is the page content -->
+
+  <!-- Container box in center -->
+  <div class="container">
+
+    <!-- Page title -->
+    <h1>Image Result</h1>
+
+    <!-- Show original image -->
+    <p>Original Image</p>
+    <img src="{{ original_image }}" class="preview-image">
+    <!-- This shows the uploaded image -->
+
+    <!-- Show processed image -->
+    <p>Processed Image</p>
+    <img src="{{ result_image }}" class="preview-image">
+    <!-- This shows the processed image -->
+
+    <!-- Button to go back -->
+    <a href="/">
+      <button>Back Home</button>
+    </a>
+
+  </div>
+
+</body>
+</html>
