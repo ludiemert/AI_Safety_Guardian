@@ -8,3 +8,59 @@ changed HTML/CSS/JS → refresh browser
 Start Backend
 
 (.venv) PS C:\Users\user\Downloads\AI_Safety_Guardian> python backend/app.py
+
+
+
+
+
+
+
+
+
+
+
+___________
+
+Partes do Project
+
+Now:
+Agora temos esta base:
+
+✔ Flask
+✔ HTML/CSS/JS
+✔ Upload de imagem
+✔ OpenCV processando
+✔ Resultado na tela
+✔ Nomes únicos
+✔ Projeto organizado
+
+Criar o “Risk Detection Logic”
+
+Antes de YOLO, vamos criar uma lógica simples de risco:
+
+imagem enviada → sistema processa → cria um status:
+Safe
+ou
+Risk detected
+
+Exemplo inicial:
+
+se a imagem tiver muitas bordas/objetos → Possible risk detected
+se tiver poucas bordas → Safe
+
+Ainda não é YOLO, mas já prepara o projeto para: YOLO → detect person → detect helmet → risk alert
+
+O que vamos adicionar
+
+Na página de resultado:
+
+Safety Status: Possible Risk Detected
+Risk Level: Medium
+Message: Please check the area.
+
+Depois:
+
+áudio automático quando risco for detectado
+salvar histórico
+gráfico
+YOLO
