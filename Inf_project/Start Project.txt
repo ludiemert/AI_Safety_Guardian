@@ -1,5 +1,10 @@
 Start Project
 
+Always
+changed Python → restart server
+changed HTML/CSS/JS → refresh browser
+
+
 Start Backend
 
 (.venv) PS C:\Users\user\Downloads\AI_Safety_Guardian> python backend/app.py
