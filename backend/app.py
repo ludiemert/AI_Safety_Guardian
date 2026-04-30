@@ -1,6 +1,6 @@
 # pylint: disable=no-member
 
-# Import Flask and tools
+# Import Flask tools
 from flask import Flask, render_template, request, send_from_directory
 
 # Import OpenCV for image processing
@@ -10,7 +10,7 @@ import cv2
 import uuid
 
 
-# Create app
+# Create Flask app
 app = Flask(
     __name__,
     template_folder="../frontend/templates",
@@ -18,30 +18,29 @@ app = Flask(
 )
 
 
-# Home page
+# Home page route
 @app.route("/")
 def home():
     """Show the home page."""
     return render_template("index.html")
 
 
-# Upload route (receive image)
+# Upload route
 @app.route("/upload", methods=["POST"])
 def upload():
-    """Receive image, process it, and show result page."""
+    """Receive image, process image, and show result page."""
 
-    # Get file from form
+    # Get image from HTML form
     file = request.files["image"]
 
-    # Check if file exists
+    # Check if user selected a file
     if not file or file.filename == "":
         return "No file selected"
 
-    # Create unique ID
+    # Create unique ID for this upload
     unique_id = str(uuid.uuid4())
-    # Meaning (A2): create different name for each image
 
-    # Define paths
+    # Create file paths
     original_path = f"data/uploads/original_{unique_id}.jpg"
     result_path = f"data/results/result_{unique_id}.jpg"
 
@@ -54,28 +53,28 @@ def upload():
     # Convert image to gray
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Detect edges
+    # Detect edges in the image
     edges = cv2.Canny(gray, 100, 200)
 
     # Save processed image
     cv2.imwrite(result_path, edges)
 
-    # ===============================
-    # 🔥 RISK DETECTION LOGIC
-    # ===============================
+    # -------------------------------
+    # Risk detection logic
+    # -------------------------------
 
-    # Count white pixels (edges)
+    # Count edge pixels
     edge_count = cv2.countNonZero(edges)
 
     # Get image size
     height, width = edges.shape
     total_pixels = height * width
 
-    # Calculate percentage of edges
+    # Calculate edge percentage
     edge_percentage = (edge_count / total_pixels) * 100
 
-    # Simple logic
-    if edge_percentage > 20:  # 20% risc
+    # If edge score is high, show risk and alarm buttons
+    if edge_percentage > 20:
         safety_status = "⚠️ Risk detected"
         risk_level = "Medium"
         safety_message = "Please check the area."
@@ -86,10 +85,7 @@ def upload():
         safety_message = "No visible risk found."
         play_alarm = False
 
-    # ===============================
-    # SEND DATA TO HTML
-    # ===============================
-
+    # Send data to result.html
     return render_template(
         "result.html",
         original_image=f"/data/uploads/original_{unique_id}.jpg",
@@ -102,9 +98,10 @@ def upload():
     )
 
 
-# Route to serve images from data folder
+# Show images from data folder
 @app.route("/data/<path:filename>")
 def data_files(filename):
+    """Show uploaded and processed images."""
     return send_from_directory("../data", filename)
 
 

@@ -37,10 +37,10 @@
     <p><strong>Message:</strong> {{ safety_message }}</p>
     <p><strong>Edge Score:</strong> {{ edge_percentage }}%</p>
 
-    <!-- Show buttons only if risk -->
+    <!-- Show alarm buttons only if risk is detected -->
     {% if play_alarm %}
-      <button onclick="startAlarm()">Start Alarm</button>
-      <button onclick="stopAlarm()">Stop Alarm</button>
+    <button onclick="startAlarm()">Start Alarm</button>
+    <button onclick="stopAlarm()">Stop Alarm</button>
     {% endif %}
 
     <!-- Original image -->
@@ -59,38 +59,47 @@
   </div>
 
   <!-- Alarm script (put at end for best practice) -->
+  <!-- Alarm script -->
   <script>
-    // Audio variables
-    let audioContext;
-    let oscillator;
-    let gainNode;
+  // Audio variables
+  let audioContext;
+  let oscillator;
+  let gainNode;
 
-    // Start alarm sound
-    function startAlarm() {
-      if (oscillator) return; // avoid multiple sounds
+  // Risk value from Flask
+  const playAlarm = "{{ play_alarm }}" === "True";
 
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      oscillator = audioContext.createOscillator();
-      gainNode = audioContext.createGain();
+  // Start continuous alarm
+  function startAlarm() {
+    if (oscillator) return;
 
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(900, audioContext.currentTime);
-      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    oscillator = audioContext.createOscillator();
+    gainNode = audioContext.createGain();
 
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(900, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
 
-      oscillator.start();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
+  }
+
+  // Stop alarm
+  function stopAlarm() {
+    if (oscillator) {
+      oscillator.stop();
+      oscillator.disconnect();
+      oscillator = null;
     }
+  }
 
-    // Stop alarm sound
-    function stopAlarm() {
-      if (oscillator) {
-        oscillator.stop();
-        oscillator.disconnect();
-        oscillator = null;
-      }
-    }
+  // Start alarm automatically if risk is detected
+  if (playAlarm) {
+    startAlarm();
+  }
   </script>
 
 </body>
