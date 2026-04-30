@@ -1,78 +1,97 @@
 <!DOCTYPE html>
-<!-- This defines the HTML document -->
+<!-- HTML document -->
 
 <html lang="en">
-<!-- This starts the HTML page -->
+<!-- Start page -->
 
 <head>
   <!-- Page settings -->
 
   <meta charset="UTF-8">
-  <!-- This sets text format -->
+  <!-- Text format -->
 
   <title>Result - AI Safety Guardian</title>
-  <!-- This is the page title -->
+  <!-- Page title -->
 
-  <!-- Load CSS file -->
+  <!-- Load CSS -->
   <link rel="stylesheet" href="/static/style.css">
 
-  <!-- Load favicon icon -->
+  <!-- Load icon -->
   <link rel="icon" href="/static/favicon.ico">
 </head>
 
-  <script>
-  const playAlarm = "{{ play_alarm }}" === "True";
-
-  if (playAlarm) {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(900, audioContext.currentTime);
-    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 0.8);
-  }
-  </script>
-
 <body>
-<!-- This is the page content -->
+<!-- Page content -->
 
-  <!-- Container box in center -->
+  <!-- Center container -->
   <div class="container">
 
-    <!-- Page title -->
+    <!-- Title -->
     <h1>Image Result</h1>
 
+    <!-- Safety status -->
     <h2>{{ safety_status }}</h2>
 
+    <!-- Risk info -->
     <p><strong>Risk Level:</strong> {{ risk_level }}</p>
-
     <p><strong>Message:</strong> {{ safety_message }}</p>
-
     <p><strong>Edge Score:</strong> {{ edge_percentage }}%</p>
 
-    <!-- Show original image -->
+    <!-- Show buttons only if risk -->
+    {% if play_alarm %}
+      <button onclick="startAlarm()">Start Alarm</button>
+      <button onclick="stopAlarm()">Stop Alarm</button>
+    {% endif %}
+
+    <!-- Original image -->
     <p>Original Image</p>
     <img src="{{ original_image }}" class="preview-image">
-    <!-- This shows the uploaded image -->
 
-    <!-- Show processed image -->
+    <!-- Processed image -->
     <p>Processed Image</p>
     <img src="{{ result_image }}" class="preview-image">
-    <!-- This shows the processed image -->
 
-    <!-- Button to go back -->
+    <!-- Back button -->
     <a href="/">
       <button>Back Home</button>
     </a>
 
   </div>
+
+  <!-- Alarm script (put at end for best practice) -->
+  <script>
+    // Audio variables
+    let audioContext;
+    let oscillator;
+    let gainNode;
+
+    // Start alarm sound
+    function startAlarm() {
+      if (oscillator) return; // avoid multiple sounds
+
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      oscillator = audioContext.createOscillator();
+      gainNode = audioContext.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(900, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.start();
+    }
+
+    // Stop alarm sound
+    function stopAlarm() {
+      if (oscillator) {
+        oscillator.stop();
+        oscillator.disconnect();
+        oscillator = null;
+      }
+    }
+  </script>
 
 </body>
 </html>
