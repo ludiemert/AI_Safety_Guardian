@@ -75,14 +75,16 @@ def upload():
     edge_percentage = (edge_count / total_pixels) * 100
 
     # Simple logic
-    if edge_percentage > 8:
+    if edge_percentage > 20:  # 20% risc
         safety_status = "⚠️ Risk detected"
         risk_level = "Medium"
         safety_message = "Please check the area."
+        play_alarm = True
     else:
         safety_status = "✅ Safe"
         risk_level = "Low"
         safety_message = "No visible risk found."
+        play_alarm = False
 
     # ===============================
     # SEND DATA TO HTML
@@ -96,6 +98,7 @@ def upload():
         risk_level=risk_level,
         safety_message=safety_message,
         edge_percentage=round(edge_percentage, 2),
+        play_alarm=play_alarm,
     )
 
 

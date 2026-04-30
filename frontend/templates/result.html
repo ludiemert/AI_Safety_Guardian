@@ -20,6 +20,26 @@
   <link rel="icon" href="/static/favicon.ico">
 </head>
 
+  <script>
+  const playAlarm = "{{ play_alarm }}" === "True";
+
+  if (playAlarm) {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(900, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.8);
+  }
+  </script>
+
 <body>
 <!-- This is the page content -->
 
