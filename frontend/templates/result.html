@@ -29,6 +29,14 @@
     <!-- Page title -->
     <h1>Image Result</h1>
 
+    <h2>{{ safety_status }}</h2>
+
+      <p><strong>Risk Level:</strong> {{ risk_level }}</p>
+
+      <p><strong>Message:</strong> {{ safety_message }}</p>
+
+      <p><strong>Edge Score:</strong> {{ edge_percentage }}%</p>
+
     <!-- Show original image -->
     <p>Original Image</p>
     <img src="{{ original_image }}" class="preview-image">
