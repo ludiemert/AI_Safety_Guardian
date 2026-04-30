@@ -64,3 +64,26 @@ Depois:
 salvar histórico
 gráfico
 YOLO
+
+JA TEMOS
+✔ upload de imagem
+✔ OpenCV processa imagem
+✔ Edge Score
+✔ risco acima de 20%
+✔ alarme automático contínuo
+✔ botão Stop Alarm
+✔ botão Start Alarm
+✔ resultado na tela
+
+Proximo passo:
+Salvar histórico + criar gráfico
+
+Esse é o melhor próximo passo porque transforma o projeto em sistema real, não só teste de imagem.
+
+Vamos salvar:
+
+date/time
+edge score
+risk level
+status
+image path
