@@ -11,7 +11,17 @@ Start Backend
 
 
 
+______________________
 
+Trilha do projeto
+
+Fase 1: imagem upload + alarme + lógica simples
+Fase 2: histórico + gráfico
+Fase 3: vídeo/webcam contínuo
+Fase 4: snapshot automático do risco
+Fase 5: YOLO detectando riscos reais
+Fase 6: relatório PDF/dashboard
+Fase 7: deploy/demo online
 
 
 

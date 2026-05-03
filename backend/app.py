@@ -9,6 +9,15 @@ import cv2
 # Import UUID to create unique file names
 import uuid
 
+# Import CSV to save history
+import csv
+
+# Import datetime to save date and time
+from datetime import datetime
+
+# Import os to check if file exists
+import os
+
 
 # Create Flask app
 app = Flask(
@@ -28,7 +37,7 @@ def home():
 # Upload route
 @app.route("/upload", methods=["POST"])
 def upload():
-    """Receive image, process image, and show result page."""
+    """Receive image, process image, save history, and show result page."""
 
     # Get image from HTML form
     file = request.files["image"]
@@ -84,6 +93,63 @@ def upload():
         risk_level = "Low"
         safety_message = "No visible risk found."
         play_alarm = False
+
+    # -------------------------------
+    # Save risk history
+    # -------------------------------
+
+    # Get current date and time
+    now = datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
+    time_str = now.strftime("%H:%M:%S")
+
+    # First version risk type
+    risk_type = "Edge Detection"
+
+    # Set status
+    status = "active" if play_alarm else "safe"
+
+    # First version duration
+    duration = 0
+
+    # CSV file path
+    csv_file = "data/risk_history.csv"
+
+    # Check if CSV exists
+    file_exists = os.path.isfile(csv_file)
+
+    # Save data in CSV
+    with open(csv_file, mode="a", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+
+        # Create header if CSV does not exist
+        if not file_exists:
+            writer.writerow(
+                [
+                    "date",
+                    "time",
+                    "risk_type",
+                    "risk_level",
+                    "edge_score",
+                    "status",
+                    "duration",
+                    "image_path",
+                ]
+            )
+
+        # Save one analysis row
+        writer.writerow(
+            [
+                date_str,
+                time_str,
+                risk_type,
+                risk_level,
+                round(edge_percentage, 2),
+                status,
+                duration,
+                result_path,
+            ]
+        )
 
     # Send data to result.html
     return render_template(
