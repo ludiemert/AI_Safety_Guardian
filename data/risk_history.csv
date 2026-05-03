@@ -1,0 +1,4 @@
+date,time,risk_type,risk_level,edge_score,status,duration,image_path
+2026-05-03,22:31:40,Edge Detection,Medium,23.96,active,0,data/results/result_51835507-2b23-4c51-84f4-5c3b952b5eca.jpg
+2026-05-03,22:35:21,Edge Detection,Low,7.23,safe,0,data/results/result_10c7b25d-9538-470f-83ab-27e50099b005.jpg
+2026-05-03,22:35:49,Edge Detection,Medium,21.48,active,0,data/results/result_84d4ebb9-b5a9-444b-90fc-46b3f83ff08a.jpg
