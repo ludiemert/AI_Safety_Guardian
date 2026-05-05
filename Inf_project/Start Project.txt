@@ -85,6 +85,13 @@ JA TEMOS
 ✔ botão Start Alarm
 ✔ resultado na tela
 
+OQ ja esta concluido: 
+OpenCV → processa a imagem
+Risk logic → decide Safe ou Risk
+CSV → salva o histórico
+Alarm → responde com alerta sonoro
+
+
 Proximo passo:
 Salvar histórico + criar gráfico
 
@@ -97,3 +104,16 @@ edge score
 risk level
 status
 image path
+
+
+Ok funcionando e criando tabela com as informacoes da img no historico
+
+AGORA
+
+Criar a página /history
+
+Para você ver o histórico na web, não só no CSV.
+
+Depois disso vamos para:
+
+CSV → tabela na web → gráfico → relatório
