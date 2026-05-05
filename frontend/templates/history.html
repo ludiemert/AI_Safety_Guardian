@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>History - AI Safety Guardian</title>
+
+  <!-- Load CSS -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- Page title -->
+  <h1>Risk History</h1>
+
+  <!-- Table -->
+  <table border="1" style="width:100%;">
+
+    <!-- Loop rows -->
+    {% for row in rows %}
+      <tr>
+
+        <!-- Loop columns -->
+        {% for col in row %}
+          <td>{{ col }}</td>
+        {% endfor %}
+
+      </tr>
+    {% endfor %}
+
+  </table>
+
+  <br>
+
+  <!-- Back button -->
+  <a href="/"><button>Back Home</button></a>
+
+</div>
+
+</body>
+</html>
