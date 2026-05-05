@@ -114,6 +114,15 @@ Criar a página /history
 
 Para você ver o histórico na web, não só no CSV.
 
+
+Pagina History
+Como será o history.html
+👉 vai mostrar uma tabela com dados
+
+🧩 history.html
+
+
+
 Depois disso vamos para:
 
 CSV → tabela na web → gráfico → relatório

@@ -171,6 +171,28 @@ def data_files(filename):
     return send_from_directory("../data", filename)
 
 
+@app.route("/history")
+def history():
+    """Show risk history page."""
+
+    # CSV file path
+    csv_file = "data/risk_history.csv"
+
+    # Create empty list
+    rows = []
+
+    # Read CSV file if exists
+    if os.path.isfile(csv_file):
+        with open(csv_file, mode="r", encoding="utf-8") as file:
+            reader = csv.reader(file)
+
+            # Convert CSV to list
+            rows = list(reader)
+
+    # Send data to HTML page
+    return render_template("history.html", rows=rows)
+
+
 # Run server
 if __name__ == "__main__":
     app.run(debug=True)
