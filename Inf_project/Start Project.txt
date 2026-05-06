@@ -122,6 +122,16 @@ Como será o history.html
 🧩 history.html
 
 
+AGORA ESTA PRONTO
+
+✔ upload de imagem
+✔ processamento (OpenCV)
+✔ decisão (risk logic)
+✔ alarme
+✔ histórico (CSV)
+✔ visualização web (/history)
+✔ UI organizada
+
 
 Depois disso vamos para:
 

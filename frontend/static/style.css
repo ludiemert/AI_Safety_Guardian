@@ -118,3 +118,10 @@ button:hover {
 .history-table tr:hover {
     background-color: #f1f7ff;
 }
+
+/* Chart box */
+.chart-box {
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+}

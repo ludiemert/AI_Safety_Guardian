@@ -16,6 +16,12 @@
   <!-- Page title -->
   <h1>Risk History</h1>
 
+  <!-- Chart title -->
+<h2>Risk vs Safe Chart</h2>
+
+<!-- Chart area -->
+<div id="riskChart" class="chart-box"></div>
+
   <!-- Table -->
   <table class="history-table">
 
@@ -39,6 +45,33 @@
   <a href="/"><button>Back Home</button></a>
 
 </div>
+
+<!-- Load Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+
+<script>
+  // Get chart data from Flask API
+  fetch("/api/stats")
+    .then(response => response.json())
+    .then(data => {
+      // Create chart data
+      const chartData = [{
+        labels: data.labels,
+        values: data.values,
+        type: "pie"
+      }];
+
+      // Chart layout
+      const layout = {
+        title: "Risk vs Safe",
+        height: 400
+      };
+
+      // Draw chart
+      Plotly.newPlot("riskChart", chartData, layout);
+    });
+</script>
 
 </body>
 </html>

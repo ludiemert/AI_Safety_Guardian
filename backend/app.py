@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 
 # Import Flask tools
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, jsonify
 
 # Import OpenCV for image processing
 import cv2
@@ -191,6 +191,39 @@ def history():
 
     # Send data to HTML page
     return render_template("history.html", rows=rows)
+
+
+# API route for chart data
+@app.route("/api/stats")
+def api_stats():
+    """Send chart data as JSON."""
+
+    # CSV file path
+    csv_file = "data/risk_history.csv"
+
+    # Start counters
+    active_count = 0
+    safe_count = 0
+
+    # Read CSV if exists
+    if os.path.isfile(csv_file):
+        with open(csv_file, mode="r", encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+
+            # Count status values
+            for row in reader:
+                if row["status"] == "active":
+                    active_count += 1
+                elif row["status"] == "safe":
+                    safe_count += 1
+
+    # Send data to frontend
+    return jsonify(
+        {
+            "labels": ["Risk", "Safe"],
+            "values": [active_count, safe_count],
+        }
+    )
 
 
 # Run server
