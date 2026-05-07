@@ -194,6 +194,8 @@ def history():
 
 
 # API route for chart data
+# 1. Average Edge Score - more grafic
+# 2. Risks by Hour  - more grafic
 @app.route("/api/stats")
 def api_stats():
     """Send chart data as JSON."""
@@ -201,27 +203,54 @@ def api_stats():
     # CSV file path
     csv_file = "data/risk_history.csv"
 
-    # Start counters
+    # Counters
     active_count = 0
     safe_count = 0
+
+    # Edge score list
+    edge_scores = []
+
+    # Risks by hour
+    risks_by_hour = {}
 
     # Read CSV if exists
     if os.path.isfile(csv_file):
         with open(csv_file, mode="r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
 
-            # Count status values
+            # Read each row
             for row in reader:
-                if row["status"] == "active":
+                status = row["status"]
+                hour = row["time"][:2]
+                edge_score = float(row["edge_score"])
+
+                # Count status
+                if status == "active":
                     active_count += 1
-                elif row["status"] == "safe":
+                    risks_by_hour[hour] = risks_by_hour.get(hour, 0) + 1
+                elif status == "safe":
                     safe_count += 1
+
+                # Save score
+                edge_scores.append(edge_score)
+
+    # Calculate average edge score
+    average_edge_score = 0
+    if edge_scores:
+        average_edge_score = sum(edge_scores) / len(edge_scores)
 
     # Send data to frontend
     return jsonify(
         {
-            "labels": ["Risk", "Safe"],
-            "values": [active_count, safe_count],
+            "risk_safe": {
+                "labels": ["Risk", "Safe"],
+                "values": [active_count, safe_count],
+            },
+            "average_edge_score": round(average_edge_score, 2),
+            "risks_by_hour": {
+                "hours": list(risks_by_hour.keys()),
+                "values": list(risks_by_hour.values()),
+            },
         }
     )
 

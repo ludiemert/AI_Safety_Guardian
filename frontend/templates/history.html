@@ -16,11 +16,17 @@
   <!-- Page title -->
   <h1>Risk History</h1>
 
-  <!-- Chart title -->
-<h2>Risk vs Safe Chart</h2>
+  <!-- Charts title -->
+  <h2>Risk Dashboard</h2>
 
-<!-- Chart area -->
-<div id="riskChart" class="chart-box"></div>
+  <!-- Risk vs Safe chart -->
+  <div id="riskChart" class="chart-box"></div>
+
+  <!-- Average edge score chart -->
+  <div id="averageChart" class="chart-box"></div>
+
+  <!-- Risks by hour chart -->
+  <div id="hourChart" class="chart-box"></div>
 
   <!-- Table -->
   <table class="history-table">
@@ -46,32 +52,70 @@
 
 </div>
 
-<!-- Load Plotly.js -->
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <!-- Load Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 
 
-<script>
+  <script>
   // Get chart data from Flask API
   fetch("/api/stats")
     .then(response => response.json())
     .then(data => {
-      // Create chart data
-      const chartData = [{
-        labels: data.labels,
-        values: data.values,
+
+      // Chart 1: Risk vs Safe
+      const riskSafeData = [{
+        labels: data.risk_safe.labels,
+        values: data.risk_safe.values,
         type: "pie"
       }];
 
-      // Chart layout
-      const layout = {
+      const riskSafeLayout = {
         title: "Risk vs Safe",
         height: 400
       };
 
-      // Draw chart
-      Plotly.newPlot("riskChart", chartData, layout);
+      Plotly.newPlot("riskChart", riskSafeData, riskSafeLayout);
+
+
+      // Chart 2: Average Edge Score
+      const averageData = [{
+        x: ["Average Edge Score"],
+        y: [data.average_edge_score],
+        type: "bar"
+      }];
+
+      const averageLayout = {
+        title: "Average Edge Score",
+        height: 350,
+        yaxis: {
+          title: "Score (%)"
+        }
+      };
+
+      Plotly.newPlot("averageChart", averageData, averageLayout);
+
+
+      // Chart 3: Risks by Hour
+      const hourData = [{
+        x: data.risks_by_hour.hours,
+        y: data.risks_by_hour.values,
+        type: "bar"
+      }];
+
+      const hourLayout = {
+        title: "Risks by Hour",
+        height: 350,
+        xaxis: {
+          title: "Hour"
+        },
+        yaxis: {
+          title: "Risk Count"
+        }
+      };
+
+      Plotly.newPlot("hourChart", hourData, hourLayout);
     });
-</script>
+  </script>
 
 </body>
 </html>
