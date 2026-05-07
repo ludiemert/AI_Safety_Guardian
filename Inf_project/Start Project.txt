@@ -183,3 +183,54 @@ AGORA ESTA PRONTO
 Depois disso vamos para:
 
 CSV → tabela na web → gráfico → relatório
+
+mais grafico
+
+Fluxo completo
+Flask → envia JSON
+↓
+JS → recebe JSON
+↓
+Plotly → transforma em gráfico
+↓
+Browser → mostra visual
+💥 Tradução prática
+Python pensa
+JavaScript pede
+Plotly desenha
+Usuário entende 
+
+
+Frase A2 (IMPORTANTE)
+The backend calculates the average.
+The frontend receives the data.
+Plotly shows the chart.
+🚀 O QUE VOCÊ TEM AGORA
+✔ coleta dados
+✔ calcula métricas
+✔ cria indicadores (KPI)
+✔ mostra visualmente
+
+👉 Isso já é:  mini data analytics system
+
+vou trocar o app.py para 2_app.py (aqui a versao com graficos)
+e tambem voou deixar a parte do history guardada
+
+_____________________________________
+Outro nivel
+
+projeto: YOLO (detecção real)
+YOLO = You Only Look Once
+
+modelo de IA que detecta objetos na imagem
+
+
+PRÓXIMO NÍVEL (AGORA FICA MUITO FORTE)
+
+Agora você pode evoluir para:
+
+🔥 YOLO (detecção real de risco)
+
+👉 pessoa sem capacete
+👉 objeto no chão
+👉 área bloqueada
