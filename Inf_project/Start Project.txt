@@ -1,3 +1,50 @@
+About project
+
+VISÃO PROFISSIONAL (ARQUITETURA)
+🔷 BACKEND (Flask)
+👉 Responsável por:
+processar dados
+ler CSV
+criar API
+
+🔷 API (ponte entre back e front)
+👉 Responsável por:
+enviar dados do backend para o frontend
+
+🔷 FRONTEND (HTML + JS)
+👉 Responsável por:
+pedir dados
+mostrar dados
+criar gráfico
+
+VISÃO COMPLETA (EMPRESA)
+CSV (storage)
+↓
+Flask (backend)
+↓
+API (JSON)
+↓
+JavaScript (frontend)
+↓
+Plotly (visualization)
+↓
+User (dashboard)
+
+
+✔ Backend API
+✔ Data pipeline
+✔ Frontend fetch
+✔ Data visualization
+The backend saves data.
+The API sends data.
+The frontend gets data.
+Plotly shows the chart.
+
+I created a Flask API to read data from CSV.
+The frontend uses fetch to get the data.
+I used Plotly.js to create charts.
+
+
 Start Project
 
 Always
