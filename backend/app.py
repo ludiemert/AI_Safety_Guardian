@@ -3,6 +3,9 @@
 # Import Flask tools
 from flask import Flask, render_template, request, send_from_directory, jsonify
 
+# Import YOLO model
+from ultralytics import YOLO
+
 # Import OpenCV for image processing
 import cv2
 
@@ -26,6 +29,9 @@ app = Flask(
     static_folder="../frontend/static",
 )
 
+# Load YOLO model
+model = YOLO("yolov8n.pt")
+
 
 # Home page route
 @app.route("/")
@@ -46,7 +52,7 @@ def upload():
     if not file or file.filename == "":
         return "No file selected"
 
-    # Create unique ID for this upload
+    # Create unique ID
     unique_id = str(uuid.uuid4())
 
     # Create file paths
@@ -59,18 +65,31 @@ def upload():
     # Read image with OpenCV
     img = cv2.imread(original_path)
 
+    # Run YOLO detection
+    results = model(img)
+
+    # Get detected boxes
+    detections = results[0].boxes
+
+    # Person detection flag
+    person_detected = False
+
+    # Check detected objects
+    for box in detections:
+        cls_id = int(box.cls[0])
+        class_name = model.names[cls_id]
+
+        if class_name == "person":
+            person_detected = True
+
     # Convert image to gray
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Detect edges in the image
+    # Detect edges
     edges = cv2.Canny(gray, 100, 200)
 
     # Save processed image
     cv2.imwrite(result_path, edges)
-
-    # -------------------------------
-    # Risk detection logic
-    # -------------------------------
 
     # Count edge pixels
     edge_count = cv2.countNonZero(edges)
@@ -82,29 +101,25 @@ def upload():
     # Calculate edge percentage
     edge_percentage = (edge_count / total_pixels) * 100
 
-    # If edge score is high, show risk and alarm buttons
-    if edge_percentage > 20:
-        safety_status = "⚠️ Risk detected"
-        risk_level = "Medium"
-        safety_message = "Please check the area."
+    # YOLO risk logic
+    if person_detected:
+        safety_status = "⚠️ Person detected"
+        risk_level = "High"
+        safety_message = "Check safety equipment."
         play_alarm = True
     else:
-        safety_status = "✅ Safe"
+        safety_status = "✅ No person detected"
         risk_level = "Low"
-        safety_message = "No visible risk found."
+        safety_message = "No risk found."
         play_alarm = False
-
-    # -------------------------------
-    # Save risk history
-    # -------------------------------
 
     # Get current date and time
     now = datetime.now()
     date_str = now.strftime("%Y-%m-%d")
     time_str = now.strftime("%H:%M:%S")
 
-    # First version risk type
-    risk_type = "Edge Detection"
+    # Risk type
+    risk_type = "Person Detection" if person_detected else "No Person"
 
     # Set status
     status = "active" if play_alarm else "safe"
@@ -137,7 +152,7 @@ def upload():
                 ]
             )
 
-        # Save one analysis row
+        # Save one row
         writer.writerow(
             [
                 date_str,
@@ -171,6 +186,7 @@ def data_files(filename):
     return send_from_directory("../data", filename)
 
 
+# History page route
 @app.route("/history")
 def history():
     """Show risk history page."""
@@ -185,8 +201,6 @@ def history():
     if os.path.isfile(csv_file):
         with open(csv_file, mode="r", encoding="utf-8") as file:
             reader = csv.reader(file)
-
-            # Convert CSV to list
             rows = list(reader)
 
     # Send data to HTML page
@@ -194,8 +208,6 @@ def history():
 
 
 # API route for chart data
-# 1. Average Edge Score - more grafic
-# 2. Risks by Hour  - more grafic
 @app.route("/api/stats")
 def api_stats():
     """Send chart data as JSON."""
@@ -224,14 +236,12 @@ def api_stats():
                 hour = row["time"][:2]
                 edge_score = float(row["edge_score"])
 
-                # Count status
                 if status == "active":
                     active_count += 1
                     risks_by_hour[hour] = risks_by_hour.get(hour, 0) + 1
                 elif status == "safe":
                     safe_count += 1
 
-                # Save score
                 edge_scores.append(edge_score)
 
     # Calculate average edge score

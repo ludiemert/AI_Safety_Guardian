@@ -234,3 +234,6 @@ Agora você pode evoluir para:
 👉 pessoa sem capacete
 👉 objeto no chão
 👉 área bloqueada
+
+now AI Object Detection System
+install yolo
