@@ -4,3 +4,8 @@ date,time,risk_type,risk_level,edge_score,status,duration,image_path
 2026-05-03,22:35:49,Edge Detection,Medium,21.48,active,0,data/results/result_84d4ebb9-b5a9-444b-90fc-46b3f83ff08a.jpg
 2026-05-05,18:22:15,Edge Detection,Medium,23.96,active,0,data/results/result_75d587b5-f522-4823-95fa-d47d8316fb6d.jpg
 2026-05-06,18:33:55,Edge Detection,Medium,21.48,active,0,data/results/result_6a1d11e6-aa17-4b19-b518-184d08a01a54.jpg
+2026-05-10,15:26:48,No Person,Low,23.96,safe,0,data/results/result_785f2a61-0276-4509-a362-cd0c605c2285.jpg
+2026-05-10,15:27:41,Person Detection,High,3.27,active,0,data/results/result_581242d5-787f-4fd0-9612-da01a0365c06.jpg
+2026-05-10,15:32:24,Person Detection,High,17.41,active,0,data/results/result_16f68691-b60a-4223-a2a0-cd0ef2bb1ca6.jpg
+2026-05-10,15:32:55,Person Detection,High,7.23,active,0,data/results/result_524769e7-0c71-4974-aa02-cc8bdeb6ff91.jpg
+2026-05-10,15:34:43,No Person,Low,21.48,safe,0,data/results/result_a85558e0-5953-4c3a-bc00-79230d99101e.jpg
