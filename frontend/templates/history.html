@@ -28,22 +28,20 @@
   <!-- Risks by hour chart -->
   <div id="hourChart" class="chart-box"></div>
 
-  <!-- Table -->
+   <!-- Table scroll area -->
+  <div class="table-scroll">
   <table class="history-table">
 
-    <!-- Loop rows -->
     {% for row in rows %}
       <tr>
-
-        <!-- Loop columns -->
         {% for col in row %}
           <td>{{ col }}</td>
         {% endfor %}
-
       </tr>
     {% endfor %}
 
   </table>
+  </div>
 
   <br>
 
