@@ -256,3 +256,12 @@ View Ultralytics Settings with 'yolo settings' or at 'C:\Users\user\AppData\Roam
 Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart/#ultralytics-settings.
 YOLO OK
 (.venv) PS C:\Users\user\Downloads\AI_Safety_Guardian>
+
+
+Como será a lógica correta no futuro?
+
+pessoa + sem capacete = risco
+pessoa + caixa muito grande = risco médio
+caixa no chão bloqueando caminho = risco
+caixa na prateleira = seguro
+pessoa normal caminhando = seguro

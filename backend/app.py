@@ -103,10 +103,10 @@ def upload():
 
     # YOLO risk logic
     if person_detected:
-        safety_status = "⚠️ Person detected"
-        risk_level = "High"
-        safety_message = "Check safety equipment."
-        play_alarm = True
+        safety_status = "👤 Person detected"
+        risk_level = "Observation"
+        safety_message = "Person detected. No risk confirmed yet."
+        play_alarm = False
     else:
         safety_status = "✅ No person detected"
         risk_level = "Low"
