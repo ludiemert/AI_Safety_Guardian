@@ -265,3 +265,14 @@ pessoa + caixa muito grande = risco médio
 caixa no chão bloqueando caminho = risco
 caixa na prateleira = seguro
 pessoa normal caminhando = seguro
+
+ate agora o projeto tem:
+✔ Flask backend
+✔ Upload de imagem
+✔ OpenCV
+✔ YOLO object detection
+✔ Alarm logic
+✔ CSV history
+✔ API
+✔ Plotly dashboard
+✔ Web interface
