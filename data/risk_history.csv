@@ -1,16 +1,4 @@
 date,time,risk_type,risk_level,edge_score,status,duration,image_path;;;;
-2026-05-10,16:18:29,Person Detection,Observation,3.27,safe,0,data/results/result_fcca4c90-b8ae-4c6e-b31e-00f260944395.jpg
-2026-05-10,16:18:43,Person Detection,Observation,17.41,safe,0,data/results/result_f687991b-2851-4e48-a08d-28d08a3ee3ac.jpg
-2026-05-10,16:19:00,No Person,Low,17.52,safe,0,data/results/result_3afc4703-1faf-4737-8463-1cac96f90f4a.jpg
-2026-05-10,16:41:51,Person Detection,Observation,17.41,safe,0,data/results/result_468a5357-921e-437a-9872-9c4acff3a988.jpg
-2026-05-10,16:42:04,No Person,Low,25.12,safe,0,data/results/result_a8b444ba-90be-48d4-9966-b9d7bfd789dc.jpg
-2026-05-10,16:43:55,No Person,Low,21.48,safe,0,data/results/result_9e808f3b-8ac2-4313-b1dd-d5e00ca9f494.jpg
-2026-05-10,16:44:14,Person Detection,Observation,7.23,safe,0,data/results/result_d858d12d-225b-435c-9424-ab30d2e9906f.jpg
-2026-05-10,16:44:26,Person Detection,Observation,3.27,safe,0,data/results/result_a06e045d-1f75-4b7e-9c05-c2f377e5e219.jpg
-2026-05-10,16:44:38,Person Detection,Observation,17.41,safe,0,data/results/result_abe658b0-4ccd-4460-8953-690b3b07bde6.jpg
-2026-05-10,16:45:37,No Person,Low,25.12,safe,0,data/results/result_7692a685-9ae4-47db-ba43-e71246721415.jpg
-2026-05-10,16:45:50,No Person,Low,17.52,safe,0,data/results/result_4253dde6-61c4-47b9-8cd6-f1bc4ecaee50.jpg
-2026-05-10,16:46:05,Person Detection,Observation,17.41,safe,0,data/results/result_ad77a622-ced7-4e66-b267-7f4f1fb05b48.jpg
 2026-05-12,16:53:03,Person Detection,Observation,6.31,safe,0,data/results/result_8591c02b-99cf-4034-ab4f-4e7875116c3f.jpg
 2026-05-12,16:54:02,No Person,Low,21.48,safe,0,data/results/result_0d667fd7-b2db-42a4-abb9-29a1c7a8179e.jpg
 2026-05-12,16:54:13,No Person,Low,21.48,safe,0,data/results/result_428ddb42-a0af-48da-973d-195d46f12000.jpg
