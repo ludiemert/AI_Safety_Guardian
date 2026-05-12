@@ -76,11 +76,33 @@ def upload():
 
     # Check detected objects
     for box in detections:
+
+        # Get object class ID
         cls_id = int(box.cls[0])
+
+        # Get object name
         class_name = model.names[cls_id]
 
+        # Get box coordinates
+        x1, y1, x2, y2 = map(int, box.xyxy[0])
+
+        # Check if object is person
         if class_name == "person":
             person_detected = True
+
+            # Draw red rectangle
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 3)
+
+            # Draw label text
+            cv2.putText(
+                img,
+                "PERSON",
+                (x1, y1 - 10),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                1,
+                (0, 0, 255),
+                2,
+            )
 
     # Convert image to gray
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -88,8 +110,8 @@ def upload():
     # Detect edges
     edges = cv2.Canny(gray, 100, 200)
 
-    # Save processed image
-    cv2.imwrite(result_path, edges)
+    # Save image with annotations
+    cv2.imwrite(result_path, img)
 
     # Count edge pixels
     edge_count = cv2.countNonZero(edges)

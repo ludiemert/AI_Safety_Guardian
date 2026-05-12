@@ -11,3 +11,9 @@ date,time,risk_type,risk_level,edge_score,status,duration,image_path;;;;
 2026-05-10,16:45:37,No Person,Low,25.12,safe,0,data/results/result_7692a685-9ae4-47db-ba43-e71246721415.jpg
 2026-05-10,16:45:50,No Person,Low,17.52,safe,0,data/results/result_4253dde6-61c4-47b9-8cd6-f1bc4ecaee50.jpg
 2026-05-10,16:46:05,Person Detection,Observation,17.41,safe,0,data/results/result_ad77a622-ced7-4e66-b267-7f4f1fb05b48.jpg
+2026-05-12,16:53:03,Person Detection,Observation,6.31,safe,0,data/results/result_8591c02b-99cf-4034-ab4f-4e7875116c3f.jpg
+2026-05-12,16:54:02,No Person,Low,21.48,safe,0,data/results/result_0d667fd7-b2db-42a4-abb9-29a1c7a8179e.jpg
+2026-05-12,16:54:13,No Person,Low,21.48,safe,0,data/results/result_428ddb42-a0af-48da-973d-195d46f12000.jpg
+2026-05-12,16:54:39,Person Detection,Observation,9.37,safe,0,data/results/result_3169f3ba-a117-49af-9909-2334f15b5a02.jpg
+2026-05-12,16:55:47,Person Detection,Observation,6.31,safe,0,data/results/result_ec0bd9b7-7f0d-4173-90e0-4c16cafb7447.jpg
+2026-05-12,16:57:50,Person Detection,Observation,17.08,safe,0,data/results/result_cbbdcb06-6ebc-4eaf-9421-87940e777b6a.jpg
