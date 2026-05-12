@@ -276,3 +276,15 @@ ate agora o projeto tem:
 ✔ API
 ✔ Plotly dashboard
 ✔ Web interface
+
+PROXIMA ETAPA
+
+imagem
+↓
+YOLO detecta pessoa
+↓
+OpenCV desenha caixa
+↓
+salva imagem anotada
+↓
+mostra resultado visual
