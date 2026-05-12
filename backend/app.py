@@ -83,6 +83,9 @@ def upload():
         # Get object name
         class_name = model.names[cls_id]
 
+        # Get confidence score
+        confidence = float(box.conf[0])
+
         # Get box coordinates
         x1, y1, x2, y2 = map(int, box.xyxy[0])
 
@@ -96,7 +99,8 @@ def upload():
             # Draw label text
             cv2.putText(
                 img,
-                "PERSON",
+                # "PERSON",
+                f"PERSON {confidence:.2f}",
                 (x1, y1 - 10),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 1,
