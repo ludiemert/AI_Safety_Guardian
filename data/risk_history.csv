@@ -11,3 +11,4 @@ date,time,risk_type,risk_level,edge_score,status,duration,image_path;;;;
 2026-05-12,17:11:17,Person Detection,Observation,9.55,safe,0,data/results/result_8bef88ef-d299-4617-84e5-ee82d4811410.jpg
 2026-05-12,17:14:28,Person Detection,Observation,14.36,safe,0,data/results/result_8bb6a3fd-99ea-4503-bee9-43dd66b3fae0.jpg
 2026-05-12,17:27:31,Person Detection,Observation,14.36,safe,0,data/results/result_756a9145-a9f2-4324-b5d8-759365535c95.jpg
+2026-05-13,19:00:46,Person Detection,Observation,19.14,safe,0,data/results/result_5f525017-d4db-4f45-9c05-7a064b298254.jpg
