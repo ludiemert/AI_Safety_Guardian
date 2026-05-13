@@ -67,7 +67,7 @@ button:hover {
 /* Image preview */
 .preview-image {
     width: 100%;
-    max-width: 650px;
+    max-width: 850px;
     border-radius: 10px;
     margin: 10px auto;
     display: block;

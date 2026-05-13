@@ -205,6 +205,7 @@ def upload():
         safety_message=safety_message,
         edge_percentage=round(edge_percentage, 2),
         play_alarm=play_alarm,
+        person_count=person_count,
     )
 
 

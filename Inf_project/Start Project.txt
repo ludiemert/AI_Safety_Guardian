@@ -55,6 +55,15 @@ changed HTML/CSS/JS → refresh browser
 Start Backend
 
 (.venv) PS C:\Users\user\Downloads\AI_Safety_Guardian> python backend/app.py
+(.venv) PS C:\Users\user\Downloads\AI_Safety_Guardian> python backend/app.py
+ * Serving Flask app 'app'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 175-364-566
 
 Start Force Backend
 .\.venv\Scripts\python.exe backend\app.py
@@ -288,3 +297,12 @@ OpenCV desenha caixa
 salva imagem anotada
 ↓
 mostra resultado visual
+
+__________________________________________________________________
+O PROJETO AGORA
+AI detection
+confidence score
+multi-person detection
+visual rendering
+dashboard
+history
