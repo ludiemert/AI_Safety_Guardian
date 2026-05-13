@@ -21,7 +21,6 @@ from datetime import datetime
 # Import os to check if file exists
 import os
 
-
 # Create Flask app
 app = Flask(
     __name__,
@@ -74,6 +73,9 @@ def upload():
     # Person detection flag
     person_detected = False
 
+    # Count detected persons
+    person_count = 0
+
     # Check detected objects
     for box in detections:
 
@@ -92,6 +94,7 @@ def upload():
         # Check if object is person
         if class_name == "person":
             person_detected = True
+            person_count += 1
 
             # Draw red rectangle
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 3)
