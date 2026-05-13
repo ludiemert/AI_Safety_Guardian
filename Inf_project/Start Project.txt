@@ -45,6 +45,10 @@ The frontend uses fetch to get the data.
 I used Plotly.js to create charts.
 
 
+Ver o grafico apos start back
+http://127.0.0.1:5000/history
+
+
 Start Project
 
 Always

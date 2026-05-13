@@ -104,11 +104,12 @@ def upload():
                 img,
                 # "PERSON",
                 f"PERSON {confidence:.2f}",
-                (x1, y1 - 10),
+                (x1, y1 - 8),
                 cv2.FONT_HERSHEY_SIMPLEX,
-                1,
+                0.30,
                 (0, 0, 255),
-                2,
+                1,
+                cv2.LINE_AA,
             )
 
     # Convert image to gray
