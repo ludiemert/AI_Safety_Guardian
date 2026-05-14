@@ -76,6 +76,12 @@ def upload():
     # Count detected persons
     person_count = 0
 
+    # Store detected objects
+    detected_objects = []
+
+    # Store confidence values
+    confidence_scores = []
+
     # Check detected objects
     for box in detections:
 
@@ -96,10 +102,16 @@ def upload():
             person_detected = True
             person_count += 1
 
-            # Draw red rectangle
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 3)
+            # Save detected object name
+            detected_objects.append(class_name)
 
-            # Draw label text
+            # Save confidence score
+            confidence_scores.append(round(confidence, 2))
+
+            # Draw red rectangle
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+            # Draw small label above box
             cv2.putText(
                 img,
                 # "PERSON",
@@ -111,6 +123,15 @@ def upload():
                 1,
                 cv2.LINE_AA,
             )
+
+    # Create text for detected objects
+    detected_objects_text = ", ".join(detected_objects) if detected_objects else "None"
+
+    # Calculate average confidence
+    average_confidence = 0
+
+    if confidence_scores:
+        average_confidence = sum(confidence_scores) / len(confidence_scores)
 
     # Convert image to gray
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -178,6 +199,9 @@ def upload():
                     "edge_score",
                     "status",
                     "duration",
+                    "person_count",
+                    "average_confidence",
+                    "detected_objects",
                     "image_path",
                 ]
             )
@@ -192,9 +216,15 @@ def upload():
                 round(edge_percentage, 2),
                 status,
                 duration,
+                person_count,
+                round(average_confidence, 2),
+                detected_objects_text,
                 result_path,
             ]
         )
+        # Resultado no CSV,  Vai ficar assim: date,time,risk_type,risk_level,edge_score,status,duration,person_count,average_confidence,
+        # detected_objects,image_path 2026-05-10,15:40:10,
+        # Person Detection,Observation,7.23,safe,0,1,0.89,person,data/results/result_x.jpg
 
     # Send data to result.html
     return render_template(
@@ -263,9 +293,9 @@ def api_stats():
 
             # Read each row
             for row in reader:
-                status = row["status"]
-                hour = row["time"][:2]
-                edge_score = float(row["edge_score"])
+                status = row.get("status", "safe")
+                hour = row.get("time", "00:00")[:2]
+                edge_score = float(row.get("edge_score", 0))
 
                 if status == "active":
                     active_count += 1
