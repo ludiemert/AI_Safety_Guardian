@@ -310,3 +310,18 @@ multi-person detection
 visual rendering
 dashboard
 history
+
+______________
+
+ate agora 
+✔ YOLO detection
+✔ Bounding boxes
+✔ Confidence score
+✔ Multi-person count
+✔ CSV analytics
+✔ Dashboard charts
+✔ History system
+✔ Flask API
+✔ Plotly frontend
+
+__________________
