@@ -1,7 +1,14 @@
 # pylint: disable=no-member
 
 # Import Flask tools
-from flask import Flask, render_template, request, send_from_directory, jsonify
+from flask import (
+    Flask,
+    render_template,
+    request,
+    send_from_directory,
+    jsonify,
+    Response,
+)
 
 # Import YOLO model
 from ultralytics import YOLO
@@ -324,6 +331,88 @@ def api_stats():
             },
         }
     )
+
+
+# Camera page route
+@app.route("/camera")
+def camera_page():
+    """Show camera page."""
+    return render_template("camera.html")
+
+
+# Video stream route
+@app.route("/video_feed")
+def video_feed():
+    """Send webcam video stream."""
+    return Response(
+        generate_camera_frames(),
+        mimetype="multipart/x-mixed-replace; boundary=frame",
+    )
+
+
+# Generate webcam frames
+def generate_camera_frames():
+    """Open webcam and send frames to browser."""
+
+    # Open webcam
+    camera = cv2.VideoCapture(0)
+
+    while True:
+        # Read frame from camera
+        success, frame = camera.read()
+
+        # If camera fails, stop loop
+        if not success:
+            break
+
+        # Run YOLO detection
+        results = model(frame)
+
+        # Get detected boxes
+        detections = results[0].boxes
+
+        # Check detected objects
+        for box in detections:
+            # Get class ID
+            cls_id = int(box.cls[0])
+
+            # Get class name
+            class_name = model.names[cls_id]
+
+            # Get confidence score
+            confidence = float(box.conf[0])
+
+            # Get box coordinates
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+
+            # Draw only person boxes
+            if class_name == "person":
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+                cv2.putText(
+                    frame,
+                    f"P {confidence:.2f}",
+                    (x1, y1 - 8),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.4,
+                    (0, 0, 255),
+                    1,
+                    cv2.LINE_AA,
+                )
+
+        # Convert frame to jpg
+        _, buffer = cv2.imencode(".jpg", frame)
+
+        # Convert jpg to bytes
+        frame_bytes = buffer.tobytes()
+
+        # Send frame to browser
+        yield (
+            b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame_bytes + b"\r\n"
+        )
+
+    # Release camera
+    camera.release()
 
 
 # Run server
