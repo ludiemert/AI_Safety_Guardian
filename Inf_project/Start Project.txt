@@ -323,5 +323,29 @@ ate agora
 ✔ History system
 ✔ Flask API
 ✔ Plotly frontend
+ Foi => Salvar dados YOLO no histórico  - ok planilha e arquivo .svc
+person_count
+confidence
+detected_objects
+
 
 __________________
+ Prox
+
+3.	Webcam em tempo real 
+Start Camera button
+YOLO frame by frame
+Stop Camera button
+
+Start Camera
+↓
+webcam opens
+↓
+YOLO analyzes frames
+↓
+draw boxes live
+↓
+Stop Camera
+
+_______________
+
