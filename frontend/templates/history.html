@@ -30,17 +30,45 @@
 
    <!-- Table scroll area -->
   <div class="table-scroll">
-  <table class="history-table">
+    <table class="history-table">
 
-    {% for row in rows %}
+  <!-- System title -->
+  <thead>
+
+    <!-- First row -->
+    <tr class="system-title-row">
+      <th colspan="11">
+        AI Monitoring Analytics System
+      </th>
+    </tr>
+
+    <!-- Header row -->
+    <tr>
+
+      {% for col in rows[0] %}
+        <th>{{ col }}</th>
+      {% endfor %}
+
+    </tr>
+
+  </thead>
+
+  <!-- Table body -->
+  <tbody>
+
+    {% for row in rows[1:] %}
       <tr>
+
         {% for col in row %}
           <td>{{ col }}</td>
         {% endfor %}
+
       </tr>
     {% endfor %}
 
-  </table>
+  </tbody>
+
+    </table>
   </div>
 
   <br>

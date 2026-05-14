@@ -147,6 +147,29 @@ button:hover {
     font-weight: bold;
 }
 
+/* System title row */
+.system-title-row th {
+    background-color: #1e3c72;
+    color: white;
+    font-size: 22px;
+    padding: 18px;
+    text-align: center;
+}
+
+/* Header row */
+.history-table thead tr:nth-child(2) {
+    background-color: #74b9ff;
+    color: white;
+    font-weight: bold;
+}
+
+/* Table headers */
+.history-table th {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
 /* Chart box */
 .chart-box {
     width: 100%;
