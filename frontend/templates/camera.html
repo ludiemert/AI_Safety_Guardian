@@ -1,0 +1,15 @@
+# Camera page route
+@app.route("/camera")
+def camera_page():
+    """Show camera page."""
+    return render_template("camera.html")
+
+
+# Video stream route
+@app.route("/video_feed")
+def video_feed():
+    """Send webcam video stream."""
+    return Response(
+        generate_camera_frames(),
+        mimetype="multipart/x-mixed-replace; boundary=frame",
+    )
