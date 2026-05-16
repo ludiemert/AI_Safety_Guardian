@@ -3,31 +3,84 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Camera - AI Safety Guardian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Live Camera - AI Safety Guardian</title>
 
   <!-- Load CSS -->
   <link rel="stylesheet" href="/static/style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/static/favicon.ico">
 </head>
 
 <body>
 
-  <div class="container">
+  <!-- Camera container -->
+  <div class="camera-container">
 
     <!-- Page title -->
     <h1>Live Camera</h1>
 
-    <!-- Simple message -->
-    <p>YOLO real-time detection</p>
+    <!-- Page subtitle -->
+    <p class="subtitle">YOLO real-time detection with manual alarm control</p>
+
+    <!-- Camera status -->
+    <div class="status-card">
+      <span class="status-label">Camera Status</span>
+      <span class="status-safe">Live</span>
+    </div>
 
     <!-- Camera stream -->
-    <img src="/video_feed" class="preview-image">
+    <div class="camera-frame">
+      <img src="/video_feed" class="camera-image" alt="Live camera stream">
+    </div>
 
-    <!-- Back button -->
-    <a href="/">
-      <button>Back Home</button>
-    </a>
+    <!-- Control buttons -->
+    <div class="camera-controls">
+      <button onclick="startAlarm()">Start Alarm</button>
+      <button onclick="stopAlarm()">Stop Alarm</button>
+
+      <a href="/">
+        <button>Back Home</button>
+      </a>
+    </div>
 
   </div>
+
+  <!-- Alarm script -->
+  <script>
+    let audioContext;
+    let oscillator;
+    let gainNode;
+
+    // Start alarm sound
+    function startAlarm() {
+      if (oscillator) return;
+
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      oscillator = audioContext.createOscillator();
+      gainNode = audioContext.createGain();
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(900, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.start();
+    }
+
+    // Stop alarm sound
+    function stopAlarm() {
+      if (oscillator) {
+        oscillator.stop();
+        oscillator.disconnect();
+        oscillator = null;
+      }
+    }
+  </script>
 
 </body>
 </html>
