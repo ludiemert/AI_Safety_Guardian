@@ -1,51 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>AI Safety Guardian</title>
 
-   <!-- Load CSS -->
+  <!-- Load CSS -->
   <link rel="stylesheet" href="/static/style.css">
 
-  <!-- favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="/static/favicon.ico">
 </head>
+
 <body>
 
-    <div class="container">
+  <!-- Main page card -->
+  <div class="home-container">
+
+    <!-- Header -->
+    <div class="home-header">
       <h1>AI Safety Guardian</h1>
+      <p class="subtitle">AI vision system for workplace safety monitoring</p>
+    </div>
 
-      <!-- This shows teh status -->
-      <p>Status: <span id="status">Safe</span></p>
+    <!-- Status card -->
+    <div class="status-card">
+      <span class="status-label">System Status</span>
+      <span id="status" class="status-safe">Safe</span>
+    </div>
 
-      <!-- This button simulates a risk -->
-      <button onclick="triggerAlert()">Test Risk</button>
+    <!-- Action cards -->
+    <div class="action-grid">
+
+      <!-- Test alarm -->
+      <div class="action-card">
+        <h2>Test Alert</h2>
+        <p>Simulate a safety alert and sound.</p>
+        <button onclick="triggerAlert()">Test Risk</button>
+      </div>
 
       <!-- Upload image -->
+      <div class="action-card">
+        <h2>Image Detection</h2>
+        <p>Upload an image and run YOLO detection.</p>
 
-      <!-- Upload image -->
-      <form action="/upload" method="post" enctype="multipart/form-data">
-          <input type="file" name="image">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="image" required>
           <button type="submit">Upload Image</button>
-      </form>
+        </form>
+      </div>
 
-      <a href="/camera">
-      <button>Start Camera</button>
-      </a>
+      <!-- Live camera -->
+      <div class="action-card">
+        <h2>Live Camera</h2>
+        <p>Start webcam detection in real time.</p>
+
+        <a href="/camera">
+          <button>Start Camera</button>
+        </a>
+      </div>
+
+      <!-- History -->
+      <div class="action-card">
+        <h2>Risk History</h2>
+        <p>View analytics, charts, and saved detections.</p>
+
+        <a href="/history">
+          <button>Open Dashboard</button>
+        </a>
+      </div>
 
     </div>
 
+  </div>
 
-
-
-   <!-- This is the alarm sound => script.js -->
-
-   <!-- This loads JS -->
-   <script src="/static/script.js"></script>
-
-
+  <!-- Load JavaScript -->
+  <script src="/static/script.js"></script>
 
 </body>
+
 </html>

@@ -347,5 +347,22 @@ draw boxes live
 ↓
 Stop Camera
 
+Vamos fazer em 3 partes:
+
+1. criar página camera.html
+2. criar rota /camera
+3. criar stream de vídeo com YOLO
+
+PErfeito  ajusts page
+
+agora
+Eu faria nesta ordem:
+
+1. melhorar camera.html visual
+2. adicionar Start/Stop Alarm na camera.html
+3. adicionar Take Snapshot
+4. salvar snapshot em data/snapshots
+5. depois salvar snapshot no histórico
+
 _______________
 

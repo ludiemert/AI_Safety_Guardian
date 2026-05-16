@@ -1,15 +1,33 @@
-# Camera page route
-@app.route("/camera")
-def camera_page():
-    """Show camera page."""
-    return render_template("camera.html")
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <title>Camera - AI Safety Guardian</title>
 
-# Video stream route
-@app.route("/video_feed")
-def video_feed():
-    """Send webcam video stream."""
-    return Response(
-        generate_camera_frames(),
-        mimetype="multipart/x-mixed-replace; boundary=frame",
-    )
+  <!-- Load CSS -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Page title -->
+    <h1>Live Camera</h1>
+
+    <!-- Simple message -->
+    <p>YOLO real-time detection</p>
+
+    <!-- Camera stream -->
+    <img src="/video_feed" class="preview-image">
+
+    <!-- Back button -->
+    <a href="/">
+      <button>Back Home</button>
+    </a>
+
+  </div>
+
+</body>
+</html>
