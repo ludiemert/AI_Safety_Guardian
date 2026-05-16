@@ -362,7 +362,25 @@ Eu faria nesta ordem:
 2. adicionar Start/Stop Alarm na camera.html
 3. adicionar Take Snapshot
 4. salvar snapshot em data/snapshots
+
+person detected
+↓
+save snapshot
+↓
+wait 10 seconds
+↓
+can save another snapshot
+
+http://127.0.0.1:5000/camera
+
+
 5. depois salvar snapshot no histórico
+
+mkdir data\snapshots
+
+http://127.0.0.1:5000/camera
+
+
 
 _______________
 

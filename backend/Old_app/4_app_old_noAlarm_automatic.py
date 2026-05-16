@@ -28,9 +28,6 @@ from datetime import datetime
 # Import os to check if file exists
 import os
 
-# Import time for snapshot cooldown
-import time
-
 # Create Flask app
 app = Flask(
     __name__,
@@ -40,9 +37,6 @@ app = Flask(
 
 # Load YOLO model
 model = YOLO("yolov8n.pt")
-
-# Store last snapshot time
-last_snapshot_time = 0
 
 
 # Home page route
@@ -359,8 +353,6 @@ def video_feed():
 # Generate webcam frames
 def generate_camera_frames():
     """Open webcam and send frames to browser."""
-
-    global last_snapshot_time
 
     # Open webcam
     camera = cv2.VideoCapture(0)

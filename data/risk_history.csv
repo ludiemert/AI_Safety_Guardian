@@ -3,5 +3,4 @@ Date,Time,risk_type,Risk_level,Edge_score - métrica OpenCV ,Status,Duration,Per
 2026-05-13,19:56:13,Person Detection,Observation,19.24,safe,0,2,0.88,"person, person",data/results/result_2a8b84f6-eec8-40a1-8dc4-98d2ffcb273a.jpg
 2026-05-13,19:57:56,Person Detection,Observation,8.59,safe,0,2,0.38,"person, person",data/results/result_04174f67-b3d2-4a4e-b5b3-65e01736fc02.jpg
 2026-05-13,19:58:27,Person Detection,Observation,18.22,safe,0,6,0.44,"person, person, person, person, person, person",data/results/result_dfa23990-1205-4ca6-94d6-ccd3d9d6e56e.jpg
-2026-05-13,20:04:01,Person Detection,Observation,19.24,safe,0,2,0.88,"person, person",data/results/result_48687477-e8c0-46ae-90cd-82e214c3fce7.jpg
-2026-05-13,20:11:22,No Person,Low,17.52,safe,0,0,0,None,data/results/result_428a475b-9bf9-46d0-aa72-3d9b76266eab.jpg
+26-05-16,22:00:00,Person Detection,Observation,5.79,safe,0,2,0.65,"person, person",data/results/result_e2bec696-f938-427b-a59e-2c6fdda77155.jpg
