@@ -25,6 +25,8 @@ from config import (
     create_project_folders,
 )
 
+from detect import analyze_image
+
 # =========================
 # APP CONFIGURATION
 # =========================
@@ -74,59 +76,13 @@ def upload():
 
     file.save(original_path)
 
-    img = cv2.imread(original_path)
+    detection_result = analyze_image(original_path, result_path, model)
 
-    results = model(img)
-    detections = results[0].boxes
-
-    person_detected = False
-    person_count = 0
-    detected_objects = []
-    confidence_scores = []
-
-    for box in detections:
-        cls_id = int(box.cls[0])
-        class_name = model.names[cls_id]
-        confidence = float(box.conf[0])
-        x1, y1, x2, y2 = map(int, box.xyxy[0])
-
-        if class_name == "person":
-            person_detected = True
-            person_count += 1
-
-            detected_objects.append(class_name)
-            confidence_scores.append(round(confidence, 2))
-
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
-
-            cv2.putText(
-                img,
-                f"PERSON {confidence:.2f}",
-                (x1, y1 - 8),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.30,
-                (0, 0, 255),
-                1,
-                cv2.LINE_AA,
-            )
-
-    detected_objects_text = ", ".join(detected_objects) if detected_objects else "None"
-
-    average_confidence = 0
-    if confidence_scores:
-        average_confidence = sum(confidence_scores) / len(confidence_scores)
-
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray, 100, 200)
-
-    cv2.imwrite(result_path, img)
-
-    edge_count = cv2.countNonZero(edges)
-
-    height, width = edges.shape
-    total_pixels = height * width
-
-    edge_percentage = (edge_count / total_pixels) * 100
+    person_detected = detection_result["person_detected"]
+    person_count = detection_result["person_count"]
+    detected_objects_text = detection_result["detected_objects_text"]
+    average_confidence = detection_result["average_confidence"]
+    edge_percentage = detection_result["edge_percentage"]
 
     if person_detected:
         safety_status = "👤 Person detected"
