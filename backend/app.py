@@ -13,8 +13,17 @@ import cv2
 import uuid
 import csv
 from datetime import datetime
-import os
 import time
+
+from config import (
+    MODEL_PATH,
+    DATA_DIR,
+    UPLOADS_DIR,
+    RESULTS_DIR,
+    SNAPSHOTS_DIR,
+    RISK_HISTORY_FILE,
+    create_project_folders,
+)
 
 # =========================
 # APP CONFIGURATION
@@ -26,7 +35,9 @@ app = Flask(
     static_folder="../frontend/static",
 )
 
-model = YOLO("yolov8n.pt")
+create_project_folders()
+
+model = YOLO(MODEL_PATH)
 
 last_snapshot_time = 0
 
@@ -58,8 +69,8 @@ def upload():
 
     unique_id = str(uuid.uuid4())
 
-    original_path = f"data/uploads/original_{unique_id}.jpg"
-    result_path = f"data/results/result_{unique_id}.jpg"
+    original_path = UPLOADS_DIR / f"original_{unique_id}.jpg"
+    result_path = RESULTS_DIR / f"result_{unique_id}.jpg"
 
     file.save(original_path)
 
@@ -136,8 +147,8 @@ def upload():
     status = "active" if play_alarm else "safe"
     duration = 0
 
-    csv_file = "data/risk_history.csv"
-    file_exists = os.path.isfile(csv_file)
+    csv_file = RISK_HISTORY_FILE
+    file_exists = csv_file.exists()
 
     with open(csv_file, mode="a", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
@@ -171,7 +182,7 @@ def upload():
                 person_count,
                 round(average_confidence, 2),
                 detected_objects_text,
-                result_path,
+                str(result_path),
             ]
         )
 
@@ -196,7 +207,7 @@ def upload():
 @app.route("/data/<path:filename>")
 def data_files(filename):
     """Show uploaded and processed images."""
-    return send_from_directory("../data", filename)
+    return send_from_directory(DATA_DIR, filename)
 
 
 # =========================
@@ -208,10 +219,10 @@ def data_files(filename):
 def history():
     """Show risk history page."""
 
-    csv_file = "data/risk_history.csv"
+    csv_file = RISK_HISTORY_FILE
     rows = []
 
-    if os.path.isfile(csv_file):
+    if csv_file.exists():
         with open(csv_file, mode="r", encoding="utf-8") as file:
             reader = csv.reader(file)
             rows = list(reader)
@@ -228,14 +239,14 @@ def history():
 def api_stats():
     """Send chart data as JSON."""
 
-    csv_file = "data/risk_history.csv"
+    csv_file = RISK_HISTORY_FILE
 
     active_count = 0
     safe_count = 0
     edge_scores = []
     risks_by_hour = {}
 
-    if os.path.isfile(csv_file):
+    if csv_file.exists():
         with open(csv_file, mode="r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
 
@@ -345,9 +356,9 @@ def generate_camera_frames():
                     f"snapshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
                 )
 
-                snapshot_path = f"data/snapshots/{snapshot_name}"
+                snapshot_path = SNAPSHOTS_DIR / snapshot_name
 
-                cv2.imwrite(snapshot_path, frame)
+                cv2.imwrite(str(snapshot_path), frame)
 
                 last_snapshot_time = current_time
 

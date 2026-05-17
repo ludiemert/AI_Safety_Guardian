@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# Local generated files
+project_files.txt
+
+# Uploaded and generated images
+data/uploads/
+data/results/
+data/snapshots/
+
+# Local database and history files
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/risk_history.csv
+
+# IDE
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
