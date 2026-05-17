@@ -11,7 +11,6 @@ from flask import (
 from ultralytics import YOLO
 import cv2
 import uuid
-import csv
 from datetime import datetime
 import time
 
@@ -26,6 +25,12 @@ from config import (
 )
 
 from detect import analyze_image
+
+from database import (
+    save_risk_history,
+    read_risk_history,
+    read_risk_history_as_dicts,
+)
 
 # =========================
 # APP CONFIGURATION
@@ -103,44 +108,21 @@ def upload():
     status = "active" if play_alarm else "safe"
     duration = 0
 
-    csv_file = RISK_HISTORY_FILE
-    file_exists = csv_file.exists()
+    row_data = {
+        "date": date_str,
+        "time": time_str,
+        "risk_type": risk_type,
+        "risk_level": risk_level,
+        "edge_score": round(edge_percentage, 2),
+        "status": status,
+        "duration": duration,
+        "person_count": person_count,
+        "average_confidence": round(average_confidence, 2),
+        "detected_objects": detected_objects_text,
+        "image_path": str(result_path),
+    }
 
-    with open(csv_file, mode="a", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-
-        if not file_exists:
-            writer.writerow(
-                [
-                    "date",
-                    "time",
-                    "risk_type",
-                    "risk_level",
-                    "edge_score",
-                    "status",
-                    "duration",
-                    "person_count",
-                    "average_confidence",
-                    "detected_objects",
-                    "image_path",
-                ]
-            )
-
-        writer.writerow(
-            [
-                date_str,
-                time_str,
-                risk_type,
-                risk_level,
-                round(edge_percentage, 2),
-                status,
-                duration,
-                person_count,
-                round(average_confidence, 2),
-                detected_objects_text,
-                str(result_path),
-            ]
-        )
+    save_risk_history(RISK_HISTORY_FILE, row_data)
 
     return render_template(
         "result.html",
@@ -175,13 +157,7 @@ def data_files(filename):
 def history():
     """Show risk history page."""
 
-    csv_file = RISK_HISTORY_FILE
-    rows = []
-
-    if csv_file.exists():
-        with open(csv_file, mode="r", encoding="utf-8") as file:
-            reader = csv.reader(file)
-            rows = list(reader)
+    rows = read_risk_history(RISK_HISTORY_FILE)
 
     return render_template("history.html", rows=rows)
 
@@ -195,30 +171,26 @@ def history():
 def api_stats():
     """Send chart data as JSON."""
 
-    csv_file = RISK_HISTORY_FILE
-
     active_count = 0
     safe_count = 0
     edge_scores = []
     risks_by_hour = {}
 
-    if csv_file.exists():
-        with open(csv_file, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
+    rows = read_risk_history_as_dicts(RISK_HISTORY_FILE)
 
-            for row in reader:
-                status = row.get("status", "safe")
-                hour = row.get("time", "00:00")[:2]
-                edge_score = float(row.get("edge_score", 0))
+    for row in rows:
+        status = row.get("status", "safe")
+        hour = row.get("time", "00:00")[:2]
+        edge_score = float(row.get("edge_score", 0))
 
-                if status == "active":
-                    active_count += 1
-                    risks_by_hour[hour] = risks_by_hour.get(hour, 0) + 1
+        if status == "active":
+            active_count += 1
+            risks_by_hour[hour] = risks_by_hour.get(hour, 0) + 1
 
-                elif status == "safe":
-                    safe_count += 1
+        elif status == "safe":
+            safe_count += 1
 
-                edge_scores.append(edge_score)
+        edge_scores.append(edge_score)
 
     average_edge_score = 0
     if edge_scores:
