@@ -92,12 +92,16 @@
       const riskSafeData = [{
         labels: data.risk_safe.labels,
         values: data.risk_safe.values,
-        type: "pie"
+        type: "pie",
+        marker: {
+          colors: ["#d63031", "#00b894"]
+        }
       }];
 
       const riskSafeLayout = {
         title: "Risk vs Safe",
-        height: 400
+        height: 400,
+        showlegend: true
       };
 
       Plotly.newPlot("riskChart", riskSafeData, riskSafeLayout);
@@ -107,7 +111,10 @@
       const averageData = [{
         x: ["Average Edge Score"],
         y: [data.average_edge_score],
-        type: "bar"
+        type: "bar",
+        marker: {
+          color: ["#ff9f43"]
+        }
       }];
 
       const averageLayout = {
@@ -125,7 +132,10 @@
       const hourData = [{
         x: data.risks_by_hour.hours,
         y: data.risks_by_hour.values,
-        type: "bar"
+        type: "bar",
+        marker: {
+          color: "#d63031"
+        }
       }];
 
       const hourLayout = {

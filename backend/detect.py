@@ -1,3 +1,5 @@
+# pylint: disable=no-member
+
 """Image detection functions.
 
 This file has the computer vision logic.

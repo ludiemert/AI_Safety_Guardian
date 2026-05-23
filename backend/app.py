@@ -24,13 +24,14 @@ from config import (
     create_project_folders,
 )
 
+# Import the image detection function.
 from detect import analyze_image
 
-from database import (
-    save_risk_history,
-    read_risk_history,
-    read_risk_history_as_dicts,
-)
+# Import functions to save and read the risk history.
+from database import save_risk_history, read_risk_history, read_risk_history_as_dicts
+
+# Import the Pandas dashboard function.
+from analytics import build_dashboard_stats
 
 # =========================
 # APP CONFIGURATION
@@ -89,13 +90,21 @@ def upload():
     average_confidence = detection_result["average_confidence"]
     edge_percentage = detection_result["edge_percentage"]
 
+    # MVP safety rule:
+    # If the app detects a person, it creates a test risk.
+    # Later, this rule can change to real safety risks.
     if person_detected:
-        safety_status = "👤 Person detected"
-        risk_level = "Observation"
-        safety_message = "Person detected. No risk confirmed yet."
-        play_alarm = False
+        safety_status = "Risk detected"
+        # safety_status = "👤 Person detected"
+        risk_level = "Medium"
+        # risk_level = "Observation"
+        safety_message = "Person detected. This is a test risk for the MVP."
+        # safety_message = "Person detected. No risk confirmed yet."
+        play_alarm = True
+        # play_alarm = False
     else:
-        safety_status = "✅ No person detected"
+        safety_status = "Safe"
+        # safety_status = "✅ No person detected"
         risk_level = "Low"
         safety_message = "No risk found."
         play_alarm = False
@@ -104,7 +113,8 @@ def upload():
     date_str = now.strftime("%Y-%m-%d")
     time_str = now.strftime("%H:%M:%S")
 
-    risk_type = "Person Detection" if person_detected else "No Person"
+    risk_type = "Person In Area" if person_detected else "No Risk"
+    # risk_type = "Person Detection" if person_detected else "No Person"
     status = "active" if play_alarm else "safe"
     duration = 0
 
@@ -169,46 +179,15 @@ def history():
 
 @app.route("/api/stats")
 def api_stats():
-    """Send chart data as JSON."""
+    """Send dashboard data as JSON.
+    JavaScript uses this API to build the charts.
+    """
 
-    active_count = 0
-    safe_count = 0
-    edge_scores = []
-    risks_by_hour = {}
+    # Build chart data with Pandas.
+    stats = build_dashboard_stats(RISK_HISTORY_FILE)
 
-    rows = read_risk_history_as_dicts(RISK_HISTORY_FILE)
-
-    for row in rows:
-        status = row.get("status", "safe")
-        hour = row.get("time", "00:00")[:2]
-        edge_score = float(row.get("edge_score", 0))
-
-        if status == "active":
-            active_count += 1
-            risks_by_hour[hour] = risks_by_hour.get(hour, 0) + 1
-
-        elif status == "safe":
-            safe_count += 1
-
-        edge_scores.append(edge_score)
-
-    average_edge_score = 0
-    if edge_scores:
-        average_edge_score = sum(edge_scores) / len(edge_scores)
-
-    return jsonify(
-        {
-            "risk_safe": {
-                "labels": ["Risk", "Safe"],
-                "values": [active_count, safe_count],
-            },
-            "average_edge_score": round(average_edge_score, 2),
-            "risks_by_hour": {
-                "hours": list(risks_by_hour.keys()),
-                "values": list(risks_by_hour.values()),
-            },
-        }
-    )
+    # Send the data to the frontend as JSON.
+    return jsonify(stats)
 
 
 # =========================
