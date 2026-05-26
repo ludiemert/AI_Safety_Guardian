@@ -3,7 +3,7 @@
 """Image detection functions.
 
 This file has the computer vision logic.
-It uses YOLO and OpenCV to detect people in images.
+It uses YOLO and OpenCV to detect people and cell phones in images.
 """
 
 import cv2
@@ -12,8 +12,8 @@ import cv2
 def analyze_image(image_path, result_path, model):
     """Analyze one image and save the result image.
 
-    The function checks if there is a person in the image.
-    It draws a red box around each person.
+    The function checks if there is a person or a cell phone.
+    It draws boxes around the detected objects.
     It also calculates an edge score with OpenCV.
     """
 
@@ -28,6 +28,7 @@ def analyze_image(image_path, result_path, model):
 
     # Start the detection variables.
     person_detected = False
+    cell_phone_detected = False
     person_count = 0
     detected_objects = []
     confidence_scores = []
@@ -37,7 +38,7 @@ def analyze_image(image_path, result_path, model):
         # Get the class id of the object.
         cls_id = int(box.cls[0])
 
-        # Get the class name, for example "person".
+        # Get the class name, for example "person" or "cell phone".
         class_name = model.names[cls_id]
 
         # Get the confidence score of the detection.
@@ -46,19 +47,20 @@ def analyze_image(image_path, result_path, model):
         # Get the box position in the image.
         x1, y1, x2, y2 = map(int, box.xyxy[0])
 
-        # For now, the MVP only uses person detection.
+        # Save useful objects for the history.
+        if class_name in ["person", "cell phone"]:
+            detected_objects.append(class_name)
+            confidence_scores.append(round(confidence, 2))
+
+        # Person detection is an observation.
         if class_name == "person":
             person_detected = True
             person_count += 1
 
-            # Save object name and confidence.
-            detected_objects.append(class_name)
-            confidence_scores.append(round(confidence, 2))
-
             # Draw a red box around the person.
             cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
-            # Write the label on the image.
+            # Write the person label on the image.
             cv2.putText(
                 image,
                 f"PERSON {confidence:.2f}",
@@ -66,6 +68,25 @@ def analyze_image(image_path, result_path, model):
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.30,
                 (0, 0, 255),
+                1,
+                cv2.LINE_AA,
+            )
+
+        # Cell phone detection is a high risk in this MVP.
+        if class_name == "cell phone":
+            cell_phone_detected = True
+
+            # Draw a purple box around the cell phone.
+            cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 255), 2)
+
+            # Write the cell phone label on the image.
+            cv2.putText(
+                image,
+                f"CELL PHONE {confidence:.2f}",
+                (x1, y1 - 8),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.30,
+                (255, 0, 255),
                 1,
                 cv2.LINE_AA,
             )
@@ -103,6 +124,7 @@ def analyze_image(image_path, result_path, model):
     # Return all values needed by app.py.
     return {
         "person_detected": person_detected,
+        "cell_phone_detected": cell_phone_detected,
         "person_count": person_count,
         "detected_objects_text": detected_objects_text,
         "average_confidence": round(average_confidence, 2),

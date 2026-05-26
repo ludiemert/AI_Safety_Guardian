@@ -49,6 +49,11 @@ model = YOLO(MODEL_PATH)
 
 last_snapshot_time = 0
 
+camera_risk_status = {
+    "status": "safe",
+    "risk_type": "No Risk",
+    "message": "No camera risk detected.",
+}
 
 # =========================
 # HOME PAGE
@@ -85,26 +90,27 @@ def upload():
     detection_result = analyze_image(original_path, result_path, model)
 
     person_detected = detection_result["person_detected"]
+    cell_phone_detected = detection_result["cell_phone_detected"]
     person_count = detection_result["person_count"]
     detected_objects_text = detection_result["detected_objects_text"]
     average_confidence = detection_result["average_confidence"]
     edge_percentage = detection_result["edge_percentage"]
 
     # MVP safety rule:
-    # If the app detects a person, it creates a test risk.
-    # Later, this rule can change to real safety risks.
-    if person_detected:
-        safety_status = "Risk detected"
-        # safety_status = "👤 Person detected"
-        risk_level = "Medium"
-        # risk_level = "Observation"
-        safety_message = "Person detected. This is a test risk for the MVP."
-        # safety_message = "Person detected. No risk confirmed yet."
+    # Cell phone in the work area is a high risk.
+    # Person without cell phone is only an observation.
+    if cell_phone_detected:
+        safety_status = "High risk detected"
+        risk_level = "High"
+        safety_message = "Cell phone detected in the work area."
         play_alarm = True
-        # play_alarm = False
+    elif person_detected:
+        safety_status = "Person detected"
+        risk_level = "Observation"
+        safety_message = "Person detected. No high risk confirmed."
+        play_alarm = False
     else:
         safety_status = "Safe"
-        # safety_status = "✅ No person detected"
         risk_level = "Low"
         safety_message = "No risk found."
         play_alarm = False
@@ -113,8 +119,13 @@ def upload():
     date_str = now.strftime("%Y-%m-%d")
     time_str = now.strftime("%H:%M:%S")
 
-    risk_type = "Person In Area" if person_detected else "No Risk"
-    # risk_type = "Person Detection" if person_detected else "No Person"
+    if cell_phone_detected:
+        risk_type = "Cell Phone In Work Area"
+    elif person_detected:
+        risk_type = "Person In Area"
+    else:
+        risk_type = "No Risk"
+
     status = "active" if play_alarm else "safe"
     duration = 0
 
@@ -201,6 +212,16 @@ def camera_page():
     return render_template("camera.html")
 
 
+@app.route("/api/camera-status")
+def camera_status():
+    """Send the current camera risk status as JSON.
+
+    JavaScript uses this API to start or stop the alarm.
+    """
+
+    return jsonify(camera_risk_status)
+
+
 @app.route("/video_feed")
 def video_feed():
     """Send webcam video stream."""
@@ -223,7 +244,7 @@ def generate_camera_frames():
     If it finds a cell phone, it saves a high risk event.
     """
 
-    global last_snapshot_time
+    global last_snapshot_time, camera_risk_status
 
     camera = cv2.VideoCapture(0)
 
@@ -291,6 +312,19 @@ def generate_camera_frames():
                     cv2.LINE_AA,
                 )
 
+        # Update camera risk status for JavaScript.
+        if cell_phone_detected:
+            camera_risk_status = {
+                "status": "active",
+                "risk_type": "Cell Phone In Work Area",
+                "message": "Cell phone detected in the camera.",
+            }
+        else:
+            camera_risk_status = {
+                "status": "safe",
+                "risk_type": "No High Risk",
+                "message": "No high risk detected by camera.",
+            }
         # Save a snapshot every 10 seconds when a person is detected.
         if person_detected:
             current_time = time.time()
@@ -351,12 +385,6 @@ def generate_camera_frames():
 
     camera.release()
 
-
-# This function did
-# The camera saves a snapshot every 10 seconds when it detects a person.
-# If it detects a cell phone, it saves a high risk event.
-# The dashboard uses the same history file.
-#
 
 # =========================
 # RUN SERVER
