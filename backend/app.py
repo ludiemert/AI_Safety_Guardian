@@ -28,7 +28,7 @@ from config import (
 from detect import analyze_image
 
 # Import functions to save and read the risk history.
-from database import save_risk_history, read_risk_history, read_risk_history_as_dicts
+from database import save_risk_history, read_risk_history
 
 # Import the Pandas dashboard function.
 from analytics import build_dashboard_stats
@@ -216,7 +216,12 @@ def video_feed():
 
 
 def generate_camera_frames():
-    """Open webcam, detect persons, save snapshots, and send frames to browser."""
+    """Open webcam, detect risks, save snapshots, and send frames to browser.
+
+    The camera checks each frame with YOLO.
+    If it finds a person, it saves a snapshot every 10 seconds.
+    If it finds a cell phone, it saves a high risk event.
+    """
 
     global last_snapshot_time
 
@@ -228,25 +233,39 @@ def generate_camera_frames():
         if not success:
             break
 
+        # Run YOLO detection on the camera frame.
         results = model(frame)
         detections = results[0].boxes
 
+        # Start camera detection variables.
         person_detected = False
+        cell_phone_detected = False
+        person_count = 0
+        detected_objects = []
+        confidence_scores = []
 
+        # Check each object detected by YOLO.
         for box in detections:
             cls_id = int(box.cls[0])
             class_name = model.names[cls_id]
             confidence = float(box.conf[0])
             x1, y1, x2, y2 = map(int, box.xyxy[0])
 
+            # Save useful objects for the history.
+            if class_name in ["person", "cell phone"]:
+                detected_objects.append(class_name)
+                confidence_scores.append(round(confidence, 2))
+
+            # Person detection is an observation in the camera.
             if class_name == "person":
                 person_detected = True
+                person_count += 1
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
                 cv2.putText(
                     frame,
-                    f"P {confidence:.2f}",
+                    f"PERSON {confidence:.2f}",
                     (x1, y1 - 8),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.4,
@@ -255,17 +274,71 @@ def generate_camera_frames():
                     cv2.LINE_AA,
                 )
 
+            # Cell phone detection is a risk in the MVP.
+            if class_name == "cell phone":
+                cell_phone_detected = True
+
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 255), 2)
+
+                cv2.putText(
+                    frame,
+                    f"CELL PHONE {confidence:.2f}",
+                    (x1, y1 - 8),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.4,
+                    (255, 0, 255),
+                    1,
+                    cv2.LINE_AA,
+                )
+
+        # Save a snapshot every 10 seconds when a person is detected.
         if person_detected:
             current_time = time.time()
 
             if current_time - last_snapshot_time > 10:
-                snapshot_name = (
-                    f"snapshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
-                )
-
+                now = datetime.now()
+                snapshot_name = f"snapshot_{now.strftime('%Y%m%d_%H%M%S')}.jpg"
                 snapshot_path = SNAPSHOTS_DIR / snapshot_name
 
                 cv2.imwrite(str(snapshot_path), frame)
+
+                # Calculate average confidence for the detected objects.
+                average_confidence = 0
+                if confidence_scores:
+                    average_confidence = sum(confidence_scores) / len(confidence_scores)
+
+                # Create text with all detected objects.
+                if detected_objects:
+                    detected_objects_text = ", ".join(detected_objects)
+                else:
+                    detected_objects_text = "None"
+
+                # Cell phone is a high risk.
+                if cell_phone_detected:
+                    risk_type = "Cell Phone In Work Area"
+                    risk_level = "High"
+                    status = "active"
+                else:
+                    risk_type = "Camera Person In Area"
+                    risk_level = "Observation"
+                    status = "safe"
+
+                # Save camera event in the same history CSV.
+                row_data = {
+                    "date": now.strftime("%Y-%m-%d"),
+                    "time": now.strftime("%H:%M:%S"),
+                    "risk_type": risk_type,
+                    "risk_level": risk_level,
+                    "edge_score": 0,
+                    "status": status,
+                    "duration": 0,
+                    "person_count": person_count,
+                    "average_confidence": round(average_confidence, 2),
+                    "detected_objects": detected_objects_text,
+                    "image_path": str(snapshot_path),
+                }
+
+                save_risk_history(RISK_HISTORY_FILE, row_data)
 
                 last_snapshot_time = current_time
 
@@ -278,6 +351,12 @@ def generate_camera_frames():
 
     camera.release()
 
+
+# This function did
+# The camera saves a snapshot every 10 seconds when it detects a person.
+# If it detects a cell phone, it saves a high risk event.
+# The dashboard uses the same history file.
+#
 
 # =========================
 # RUN SERVER
