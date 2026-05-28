@@ -1,3 +1,19 @@
+/* Project color palette based on the favicon */
+:root {
+    --navy: #0f172a;
+    --navy-soft: #111c32;
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --green-soft: #dcfce7;
+    --panel: #f8fafc;
+    --border: #cbd5e1;
+    --risk: #ef4444;
+    --warning: #f59e0b;
+    --text: #1f2937;
+    --muted: #64748b;
+}
+
+
 /* This styles the whole page */
 body {
     margin: 0;
@@ -10,7 +26,7 @@ body {
 
     min-height: 100vh;
 
-    background: linear-gradient(to right, #74b9ff, #a29bfe);
+    background: linear-gradient(135deg, var(--navy), var(--navy-soft));
 }
 
 /* General container used by result pages */
@@ -34,7 +50,7 @@ body {
 /* Main title */
 h1 {
     font-size: 28px;
-    color: #1e3c72;
+    color: var(--navy);
 }
 
 /* Default paragraph text */
@@ -51,7 +67,7 @@ button {
     border: none;
     border-radius: 8px;
 
-    background-color: #ff4b2b;
+    background-color: var(--green);
     color: white;
 
     cursor: pointer;
@@ -60,7 +76,7 @@ button {
 
 /* Button hover effect */
 button:hover {
-    background-color: #ff1c00;
+    background-color: var(--green-dark);
 }
 
 /* Image preview used on result page */
@@ -99,8 +115,8 @@ button:hover {
 
 /* Status card */
 .status-card {
-    background: #f1f7ff;
-    border: 1px solid #d6eaff;
+    background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 18px;
     margin-bottom: 25px;
@@ -114,13 +130,13 @@ button:hover {
 /* Status label */
 .status-label {
     font-weight: bold;
-    color: #1e3c72;
+    color: var(--navy);
 }
 
 /* Safe status badge */
 .status-safe {
-    background: #dff9e8;
-    color: #167a3a;
+    background: var(--green-soft);
+    color: var(--green-dark);
     padding: 8px 14px;
     border-radius: 999px;
     font-weight: bold;
@@ -136,8 +152,8 @@ button:hover {
 
 /* Single project summary card */
 .summary-grid div {
-    background: #f8fbff;
-    border: 1px solid #d6eaff;
+    background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px;
     text-align: center;
@@ -145,7 +161,7 @@ button:hover {
 
 /* Project summary title */
 .summary-grid strong {
-    color: #1e3c72;
+    color: var(--navy);
 }
 
 /* Project summary text */
@@ -175,7 +191,7 @@ button:hover {
 
 /* Action card title */
 .action-card h2 {
-    color: #1e3c72;
+    color: var(--navy);
     margin-bottom: 10px;
 }
 
@@ -225,8 +241,8 @@ input[type="file"] {
     align-items: flex-start;
     gap: 12px;
 
-    background: #f8fbff;
-    border: 1px solid #d6eaff;
+    background: var(--panel);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 14px;
 }
@@ -249,17 +265,17 @@ input[type="file"] {
 
 /* Risk color */
 .risk-color {
-    background: #d63031;
+    background: var(--risk);
 }
 
 /* Safe color */
 .safe-color {
-    background: #00b894;
+    background: var(--green);
 }
 
 /* Edge score color */
 .edge-color {
-    background: #ff9f43;
+    background: var(--warning);
 }
 
 /* Chart box */
@@ -298,7 +314,7 @@ input[type="file"] {
 
 /* System title row */
 .system-title-row th {
-    background-color: #1e3c72;
+    background-color: var(--navy);
     color: white;
     font-size: 22px;
     padding: 18px;
@@ -307,7 +323,7 @@ input[type="file"] {
 
 /* Header row */
 .history-table thead tr:nth-child(2) {
-    background-color: #74b9ff;
+    background-color: var(--green);
     color: white;
     font-weight: bold;
 }
@@ -318,7 +334,7 @@ input[type="file"] {
     top: 0;
     z-index: 1;
 
-    background-color: #74b9ff;
+    background-color: var(--green);
     font-weight: bold;
 }
 
@@ -351,8 +367,8 @@ input[type="file"] {
     border-radius: 16px;
     overflow: hidden;
 
-    border: 2px solid #d6eaff;
-    background: #f1f7ff;
+    border: 2px solid var(--border);
+    background: var(--panel);
 }
 
 /* Camera image */
