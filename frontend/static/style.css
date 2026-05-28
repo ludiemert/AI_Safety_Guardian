@@ -12,7 +12,8 @@ body {
 
     background: linear-gradient(to right, #74b9ff, #a29bfe);
 }
-/* Container box */
+
+/* General container used by result pages */
 .container {
     text-align: center;
     background: white;
@@ -22,29 +23,27 @@ body {
     width: 90%;
     max-width: 850px;
 
-    box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 
-    /* ADD THIS */
     display: flex;
     flex-direction: column;
     gap: 18px;
     align-items: center;
-
 }
 
-/* Title */
+/* Main title */
 h1 {
     font-size: 28px;
     color: #1e3c72;
 }
 
-/* Status text */
+/* Default paragraph text */
 p {
     font-size: 18px;
     margin: 20px 0;
 }
 
-/* Button */
+/* Main button style */
 button {
     padding: 12px 20px;
     font-size: 16px;
@@ -64,7 +63,7 @@ button:hover {
     background-color: #ff1c00;
 }
 
-/* Image preview */
+/* Image preview used on result page */
 .preview-image {
     width: 100%;
     max-width: 850px;
@@ -73,118 +72,16 @@ button:hover {
     display: block;
 }
 
-/* History page container */
-.history-container {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-
-    width: 95%;
-    max-width: 1300px;
-
-    box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    overflow: visible;
-}
-
-
-
-/* History table */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 14px;
-}
-
-/* Table cells */
-.history-table th,
-.history-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-/* Table first row */
-.history-table tr:first-child {
-    background-color: #74b9ff;
-    font-weight: bold;
-}
-
-/* Table hover */
-.history-table tr:hover {
-    background-color: #f1f7ff;
-}
-
-/* Table scroll area */
-.table-scroll {
-    width: 100%;
-    max-height: 400px;
-    overflow-y: auto;
-    overflow-x: auto;
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-/* History table */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-/* Keep table header visible */
-.history-table tr:first-child {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #74b9ff;
-    font-weight: bold;
-}
-
-/* System title row */
-.system-title-row th {
-    background-color: #1e3c72;
-    color: white;
-    font-size: 22px;
-    padding: 18px;
-    text-align: center;
-}
-
-/* Header row */
-.history-table thead tr:nth-child(2) {
-    background-color: #74b9ff;
-    color: white;
-    font-weight: bold;
-}
-
-/* Table headers */
-.history-table th {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-/* Chart box */
-.chart-box {
-    width: 100%;
-    max-width: 700px;
-    margin: 20px auto;
-}
-
 /* Home page container */
 .home-container {
     background: white;
     padding: 40px;
     border-radius: 18px;
+
     width: 95%;
     max-width: 1100px;
-    box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Home header */
@@ -193,7 +90,7 @@ button:hover {
     margin-bottom: 25px;
 }
 
-/* Subtitle */
+/* Subtitle text */
 .subtitle {
     color: #555;
     font-size: 18px;
@@ -220,7 +117,7 @@ button:hover {
     color: #1e3c72;
 }
 
-/* Safe status */
+/* Safe status badge */
 .status-safe {
     background: #dff9e8;
     color: #167a3a;
@@ -229,7 +126,36 @@ button:hover {
     font-weight: bold;
 }
 
-/* Action grid */
+/* Project summary cards */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+/* Single project summary card */
+.summary-grid div {
+    background: #f8fbff;
+    border: 1px solid #d6eaff;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+/* Project summary title */
+.summary-grid strong {
+    color: #1e3c72;
+}
+
+/* Project summary text */
+.summary-grid p {
+    font-size: 14px;
+    color: #555;
+    margin: 8px 0 0;
+}
+
+/* Action grid on home page */
 .action-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -242,8 +168,9 @@ button:hover {
     border-radius: 16px;
     padding: 25px;
     text-align: center;
+
     background: #ffffff;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Action card title */
@@ -264,27 +191,140 @@ input[type="file"] {
     max-width: 100%;
 }
 
-/* Mobile responsive */
-@media (max-width: 768px) {
-    body {
-        padding: 15px;
-    }
+/* History page container */
+.history-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
 
-    .home-container {
-        padding: 25px;
-    }
+    width: 95%;
+    max-width: 1300px;
 
-    .action-grid {
-        grid-template-columns: 1fr;
-    }
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 
-    .status-card {
-        flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    h1 {
-        font-size: 24px;
-    }
+    overflow: visible;
+}
+
+/* Dashboard legend */
+.dashboard-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    width: 100%;
+    margin: 10px 0 20px;
+}
+
+/* Single legend item */
+.legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    background: #f8fbff;
+    border: 1px solid #d6eaff;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+/* Legend text */
+.legend-item p {
+    font-size: 13px;
+    margin: 6px 0 0;
+    color: #555;
+}
+
+/* Small legend color box */
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+/* Risk color */
+.risk-color {
+    background: #d63031;
+}
+
+/* Safe color */
+.safe-color {
+    background: #00b894;
+}
+
+/* Edge score color */
+.edge-color {
+    background: #ff9f43;
+}
+
+/* Chart box */
+.chart-box {
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+/* Table scroll area */
+.table-scroll {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* History table */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Table cells */
+.history-table th,
+.history-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+/* System title row */
+.system-title-row th {
+    background-color: #1e3c72;
+    color: white;
+    font-size: 22px;
+    padding: 18px;
+    text-align: center;
+}
+
+/* Header row */
+.history-table thead tr:nth-child(2) {
+    background-color: #74b9ff;
+    color: white;
+    font-weight: bold;
+}
+
+/* Keep table header visible while scrolling */
+.history-table tr:first-child {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    background-color: #74b9ff;
+    font-weight: bold;
+}
+
+/* Table hover effect */
+.history-table tr:hover {
+    background-color: #f1f7ff;
 }
 
 /* Camera page container */
@@ -292,9 +332,11 @@ input[type="file"] {
     background: white;
     padding: 35px;
     border-radius: 18px;
+
     width: 95%;
     max-width: 1100px;
-    box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 
     display: flex;
     flex-direction: column;
@@ -308,6 +350,7 @@ input[type="file"] {
     max-width: 900px;
     border-radius: 16px;
     overflow: hidden;
+
     border: 2px solid #d6eaff;
     background: #f1f7ff;
 }
@@ -324,4 +367,29 @@ input[type="file"] {
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
+}
+
+/* Mobile responsive layout */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    .home-container {
+        padding: 25px;
+    }
+
+    .action-grid,
+    .summary-grid,
+    .dashboard-legend {
+        grid-template-columns: 1fr;
+    }
+
+    .status-card {
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
 }
