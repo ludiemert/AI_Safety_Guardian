@@ -13,7 +13,6 @@
     --muted: #64748b;
 }
 
-
 /* This styles the whole page */
 body {
     margin: 0;
@@ -103,12 +102,123 @@ button:hover {
 /* Home header */
 .home-header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
+    padding: 18px 10px 8px;
+}
+
+/* Project badge above the title */
+.project-badge {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 6px 12px;
+
+    border-radius: 999px;
+    background: var(--green-soft);
+    color: var(--green-dark);
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Main home title */
+.home-header h1 {
+    font-size: 40px;
+    color: var(--navy);
+    margin: 0;
+}
+
+/* Typing effect line */
+.typing-line {
+    width: fit-content;
+    max-width: 100%;
+    margin: 12px auto 0;
+
+    color: var(--green);
+    font-size: 18px;
+    font-weight: bold;
+
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--green);
+
+    animation:
+        typingLoop 7s steps(58, end) infinite,
+        blink 0.8s step-end infinite;
+}
+
+/* Typing animation */
+@keyframes typingLoop {
+    0% {
+        width: 0;
+    }
+
+    45% {
+        width: 100%;
+    }
+
+    75% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+/* Cursor animation */
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+/* Main home subtitle */
+.home-header .subtitle {
+    max-width: 720px;
+    margin: 14px auto 0;
+
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+/* Small accent line under the subtitle */
+.header-accent {
+    width: 90px;
+    height: 4px;
+    margin: 18px auto 0;
+
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--green), var(--green-dark));
+}
+
+/* Technology badges */
+.tech-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+/* Single technology badge */
+.tech-badges span {
+    padding: 8px 12px;
+
+    border-radius: 999px;
+    background: var(--navy);
+    color: white;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
 }
 
 /* Subtitle text */
 .subtitle {
-    color: #555;
+    color: var(--muted);
     font-size: 18px;
     margin-top: 8px;
 }
@@ -167,7 +277,7 @@ button:hover {
 /* Project summary text */
 .summary-grid p {
     font-size: 14px;
-    color: #555;
+    color: var(--muted);
     margin: 8px 0 0;
 }
 
@@ -180,7 +290,7 @@ button:hover {
 
 /* Action card */
 .action-card {
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 25px;
     text-align: center;
@@ -198,7 +308,7 @@ button:hover {
 /* Action card text */
 .action-card p {
     font-size: 15px;
-    color: #555;
+    color: var(--muted);
 }
 
 /* File input */
@@ -251,7 +361,7 @@ input[type="file"] {
 .legend-item p {
     font-size: 13px;
     margin: 6px 0 0;
-    color: #555;
+    color: var(--muted);
 }
 
 /* Small legend color box */
@@ -293,7 +403,7 @@ input[type="file"] {
     overflow-x: auto;
 
     margin-top: 20px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
     border-radius: 8px;
 }
 
@@ -307,7 +417,7 @@ input[type="file"] {
 /* Table cells */
 .history-table th,
 .history-table td {
-    border: 1px solid #ddd;
+    border: 1px solid var(--border);
     padding: 10px;
     text-align: left;
 }
@@ -340,7 +450,7 @@ input[type="file"] {
 
 /* Table hover effect */
 .history-table tr:hover {
-    background-color: #f1f7ff;
+    background-color: var(--green-soft);
 }
 
 /* Camera page container */
@@ -393,6 +503,25 @@ input[type="file"] {
 
     .home-container {
         padding: 25px;
+    }
+
+    .home-header h1 {
+        font-size: 30px;
+    }
+
+    .home-header .subtitle {
+        font-size: 16px;
+    }
+
+    .typing-line {
+        font-size: 14px;
+        white-space: normal;
+        border-right: none;
+        animation: none;
+    }
+
+    .tech-badges span {
+        font-size: 12px;
     }
 
     .action-grid,
