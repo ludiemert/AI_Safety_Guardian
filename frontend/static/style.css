@@ -2,8 +2,8 @@
 :root {
     --navy: #0f172a;
     --navy-soft: #111c32;
-    --green: #22c55e;
-    --green-dark: #16a34a;
+    --green: #39ff88;
+    --green-dark: #22c55e;
     --green-soft: #dcfce7;
     --panel: #f8fafc;
     --border: #cbd5e1;
@@ -67,7 +67,8 @@ button {
     border-radius: 8px;
 
     background-color: var(--green);
-    color: white;
+    color: var(--navy);
+    font-weight: bold;
 
     cursor: pointer;
     transition: 0.3s;
@@ -177,8 +178,9 @@ button:hover {
     max-width: 720px;
     margin: 14px auto 0;
 
-    color: var(--muted);
-    font-size: 18px;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 700;
     line-height: 1.5;
 }
 
@@ -206,12 +208,15 @@ button:hover {
 .tech-badges span {
     padding: 8px 12px;
 
+    border: 1px solid rgba(34, 197, 94, 0.45);
     border-radius: 999px;
+
     background: var(--navy);
-    color: white;
+    color: #39ff88;
 
     font-size: 13px;
     font-weight: bold;
+    text-shadow: 0 0 8px rgba(57, 255, 136, 0.45);
 
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
 }
@@ -434,7 +439,7 @@ input[type="file"] {
 /* Header row */
 .history-table thead tr:nth-child(2) {
     background-color: var(--green);
-    color: white;
+    color: var(--navy);
     font-weight: bold;
 }
 
@@ -445,6 +450,7 @@ input[type="file"] {
     z-index: 1;
 
     background-color: var(--green);
+    color: var(--navy);
     font-weight: bold;
 }
 
