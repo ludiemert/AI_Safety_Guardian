@@ -32,3 +32,6 @@ data/risk_history.csv
 # OS files
 .DS_Store
 Thumbs.db
+
+# Microsoft Office temporary files
+~$*.docx
