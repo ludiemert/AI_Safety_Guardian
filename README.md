@@ -78,3 +78,42 @@ Current version:
 Person detected -> Observation
 Cell phone detected -> High Risk
 No person or phone -> Safe
+
+Project Architecture
+
+backend/
+  app.py          -> Flask routes and web flow
+  config.py       -> project settings and file paths
+  detect.py       -> YOLO and OpenCV image detection
+  database.py     -> save and read risk history
+  analytics.py    -> Pandas dashboard data
+
+frontend/
+  templates/      -> HTML pages
+  static/         -> CSS, JavaScript and favicon
+
+data/
+  uploads/        -> uploaded images
+  results/        -> processed images
+  snapshots/      -> camera snapshots
+
+How To Run
+1. Clone the repository
+
+git clone https://github.com/ludiemert/AI_Safety_Guardian.git
+cd AI_Safety_Guardian
+
+2. Create and activate virtual environment
+Windows PowerShell:
+
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+3. Install dependencies
+pip install -r requirements.txt
+
+4. Run the app
+python backend/app.py
+
+Open in the browser:
+http://127.0.0.1:5000
